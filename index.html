@@ -295,13 +295,31 @@ body.map-view #viewBtn{background:var(--g);border-color:transparent}
 .ar-overlay{position:fixed;inset:0;z-index:70;background:#000;overflow:hidden}
 .ar-overlay[hidden]{display:none}
 .ar-overlay video{width:100%;height:100%;object-fit:cover}
-.ar-markers{position:absolute;inset:0;pointer-events:none}
-.ar-tag{position:absolute;transform:translate(-50%,-100%);padding:6px 12px;border-radius:16px;text-align:center;white-space:nowrap;background:rgba(28,28,30,.55);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);border:.5px solid rgba(255,255,255,.25)}
-.ar-tag::after{content:"";position:absolute;left:50%;bottom:-7px;width:2px;height:7px;margin-left:-1px;background:var(--g2)}
-.ar-tag.over{border-color:var(--amber)}
-.ar-call{font-weight:700;font-size:.85rem;color:#fff}
-.ar-tag.over .ar-call{color:var(--amber)}
-.ar-meta{font-size:.68rem;color:var(--gd);font-variant-numeric:tabular-nums}
+.ar-markers{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+#arTrails{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+/* every aircraft is one GPU-composited layer moved with translate3d - no layout work per frame, no backdrop-filter */
+.ar-pt{position:absolute;left:0;top:0;width:0;height:0;opacity:0;transition:opacity .3s;will-change:transform}
+.ar-pt.vis{opacity:1}
+.ar-ic{position:absolute;left:-12px;top:-12px;width:24px;height:24px;color:var(--g2);filter:drop-shadow(0 1px 3px rgba(0,0,0,.8))}
+.ar-ic svg{display:block;width:100%;height:100%;fill:currentColor}
+.ar-pt.over .ar-ic{color:var(--amber)}
+.ar-pt.tgt .ar-ic{color:#fff;filter:drop-shadow(0 0 6px var(--g)) drop-shadow(0 0 2px #fff)}
+.ar-tag{position:absolute;left:0;bottom:var(--stem,22px);transform:translateX(-50%);padding:5px 10px;border-radius:14px;text-align:center;white-space:nowrap;line-height:1.2;background:rgba(18,18,20,.68);border:.5px solid rgba(255,255,255,.22)}
+.ar-tag::after{content:"";position:absolute;left:50%;top:100%;width:1px;height:calc(var(--stem,22px) - 12px);margin-left:-.5px;background:linear-gradient(rgba(255,255,255,.55),rgba(255,255,255,.08))}
+.ar-pt.over .ar-tag{border-color:var(--amber)}
+.ar-call{font-weight:700;font-size:.82rem;color:#fff}
+.ar-call small{font-weight:500;font-size:.64rem;color:var(--gd);margin-left:5px}
+.ar-pt.over .ar-call{color:var(--amber)}
+.ar-meta{font-size:.66rem;color:var(--gd);font-variant-numeric:tabular-nums}
+.ar-ext{display:none;font-size:.64rem;color:var(--g2);font-variant-numeric:tabular-nums;margin-top:1px}
+.ar-pt.focus .ar-ext{display:block}
+.ar-pt.focus .ar-tag{background:rgba(18,18,20,.84);border-color:var(--g2);padding:7px 12px}
+.ar-pt.focus .ar-call{font-size:.95rem}
+.ar-guide{position:absolute;left:0;top:0;width:0;height:0;opacity:0;transition:opacity .2s;pointer-events:none;will-change:transform}
+.ar-guide.vis{opacity:1}
+.ar-guide svg{position:absolute;left:-16px;top:-16px;width:32px;height:32px;fill:var(--g);filter:drop-shadow(0 0 6px rgba(0,0,0,.75))}
+.ar-guide span{position:absolute;left:0;top:20px;transform:translateX(-50%);font:700 .66rem var(--mono);color:#fff;white-space:nowrap;text-shadow:0 1px 3px #000}
+.ar-info{position:absolute;left:14px;top:calc(14px + env(safe-area-inset-top,0));height:38px;display:flex;align-items:center;padding:0 14px;border-radius:99px;background:rgba(18,18,20,.58);font:600 .7rem var(--mono);color:#fff;letter-spacing:.04em;z-index:71}
 .ar-hint{position:absolute;left:50%;bottom:calc(26px + env(safe-area-inset-bottom,0));transform:translateX(-50%);padding:9px 16px;border-radius:99px;background:rgba(28,28,30,.6);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);font-size:.75rem;color:var(--gd);white-space:nowrap}
 .ar-close{position:absolute;top:calc(14px + env(safe-area-inset-top,0));right:14px;z-index:71}
 .ar-cross{position:absolute;left:50%;top:50%;width:22px;height:22px;margin:-11px;border:1.5px solid rgba(255,255,255,.4);border-radius:50%}
@@ -351,6 +369,23 @@ body.golden .pl-lbl,body.golden .ac-call,body.golden .ar-call{text-shadow:0 0 10
 .pv-btn{padding:13px 8px;border-radius:16px;background:rgba(255,255,255,.07);font:600 .88rem var(--font);color:#fff}
 .pv-btn:active{background:rgba(255,255,255,.16)}
 .aod-mode .sk-strip,.aod-mode .trk,.aod-mode .sk-fx{display:none !important}
+/* ── TRAIL HISTORY SETTINGS ── */
+.seg{display:flex;gap:3px;padding:3px;border-radius:14px;background:var(--fill)}
+.seg button{flex:1;padding:9px 0;border-radius:11px;font:600 .78rem var(--font);color:var(--muted);transition:background .2s,color .2s}
+.seg button.on{background:var(--g);color:#fff}
+.opt-row{display:flex;align-items:center;gap:10px;margin:12px 4px 0}
+.opt-t{flex:1;font-size:.88rem;color:var(--gd);line-height:1.3}
+.opt-t small{display:block;font-size:.72rem;color:var(--muted)}
+/* ── SKY PASSPORT ── */
+.pp-section{margin-bottom:16px}
+.pp-card{position:relative;padding:16px 18px 14px;border:4px double rgba(var(--g-rgb),.55);border-radius:22px;background:linear-gradient(160deg,rgba(var(--g-rgb),.18),rgba(0,0,0,.25) 65%),var(--glass);font-family:var(--mono)}
+.pp-title{text-align:center;font-weight:700;font-size:.95rem;letter-spacing:.34em;color:var(--g2);padding:0 0 10px .34em;margin-bottom:8px;border-bottom:4px double rgba(var(--g-rgb),.4)}
+.pp-row{display:flex;align-items:center;gap:12px;padding:7px 2px;font-size:.9rem}
+.pp-ic{width:26px;text-align:center;font-size:1.05rem;flex-shrink:0}
+.pp-n{font-weight:700;font-size:1.15rem;min-width:3.2ch;text-align:right;color:#fff;font-variant-numeric:tabular-nums}
+.pp-l{color:var(--gd)}
+.pp-foot{margin-top:10px;font-size:.64rem;color:var(--muted);text-align:center;letter-spacing:.04em}
+.pp-reset{margin-top:10px;text-align:center}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -414,7 +449,7 @@ body.golden .pl-lbl,body.golden .ac-call,body.golden .ar-call{text-shadow:0 0 10
   </div>
 </div>
 
-<div class="ar-overlay" id="arOverlay" hidden><video id="arVideo" autoplay playsinline muted></video><div class="ar-markers" id="arMarkers"></div><div class="ar-cross"></div><div class="ar-hint" id="arHint">Point your camera at the sky and pan slowly</div><button class="icon-btn ar-close" onclick="closeAR()" aria-label="Close AR"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<div class="ar-overlay" id="arOverlay" hidden><video id="arVideo" autoplay playsinline muted></video><canvas id="arTrails"></canvas><div class="ar-markers" id="arMarkers"></div><div class="ar-guide" id="arGuide"><svg viewBox="0 0 24 24"><path d="M12 3 5 20l7-3.6L19 20z"/></svg><span id="arGuideT"></span></div><div class="ar-cross"></div><div class="ar-info" id="arInfo">—</div><div class="ar-hint" id="arHint">Point your camera at the sky and pan slowly</div><button class="icon-btn ar-close" onclick="closeAR()" aria-label="Close AR"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
 <div class="sk-fx" id="skFx"><div class="sk-sunbox"><div class="sk-sun"></div></div></div><div id="skCards"></div>
 <!-- DETAIL SHEET -->
 <div class="overlay" id="detailOverlay" onclick="closeDetail(event)">
@@ -447,6 +482,10 @@ body.golden .pl-lbl,body.golden .ac-call,body.golden .ar-call{text-shadow:0 0 10
       <input type="range" id="radiusSlider" min="1" max="20" value="5" oninput="onRadiusChange(this.value)"/>
       <div class="slider-val" id="radiusVal">5 km</div>
     </div>
+    <div class="sec-h">Trail history</div>
+    <div class="seg" id="trailSeg"><button data-m="0" onclick="thSetMins(0)">Off</button><button data-m="5" onclick="thSetMins(5)">5 min</button><button data-m="15" onclick="thSetMins(15)">15 min</button><button data-m="30" onclick="thSetMins(30)">30 min</button><button data-m="60" onclick="thSetMins(60)">1 h</button></div>
+    <div class="opt-row"><div class="opt-t">Ghost trails<small>Keep the fading path of aircraft that already left your range</small></div><button class="aod-btn" id="ghostBtn" onclick="thToggleGhost()">ON</button></div>
+    <div class="opt-row"><div class="opt-t"><small id="trailInfo">—</small></div><button class="aod-btn" onclick="thClear()">Clear</button></div>
     <div class="sec-h">Theme</div><div class="theme-grid" id="themeGrid"></div><div class="theme-name" id="themeName"></div>
     <div class="sec-h">Sky experiences (preview)</div><div class="pv-grid"><button class="pv-btn" onclick="skPreview('sunrise')">☀️ Sunrise</button><button class="pv-btn" onclick="skPreview('sunset')">🌇 Sunset</button><button class="pv-btn" onclick="skPreview('space')">🌌 Deep Space</button><button class="pv-btn" onclick="skPreview('card')">✈️ Sighting card</button><button class="pv-btn" onclick="skPreview('dawn')">🌅 Dawn</button><button class="pv-btn" onclick="skPreview('moon')">🌕 Moon</button></div>
     <div class="sec-h">Location</div>
@@ -501,6 +540,25 @@ body.golden .pl-lbl,body.golden .ac-call,body.golden .ar-call{text-shadow:0 0 10
     <div class="stats-date" id="statsDate"></div>
   </div>
   <div class="stats-body">
+    <!-- Sky Passport -->
+    <div class="pp-section">
+      <div class="s-card-lbl" style="margin-bottom:10px">Sky passport · all time · saved on this device only</div>
+      <div class="pp-card" id="ppCard">
+        <div class="pp-title">SKY PASSPORT</div>
+        <div class="pp-row"><span class="pp-ic">👁</span><span class="pp-n" id="ppSight">0</span><span class="pp-l">sightings</span></div>
+        <div class="pp-row"><span class="pp-ic">✈</span><span class="pp-n" id="ppTypes">0</span><span class="pp-l">aircraft types</span></div>
+        <div class="pp-row"><span class="pp-ic">🌎</span><span class="pp-n" id="ppAirl">0</span><span class="pp-l">airlines</span></div>
+        <div class="pp-row"><span class="pp-ic">🌅</span><span class="pp-n" id="ppSun">0</span><span class="pp-l">sunrise runs</span></div>
+        <div class="pp-row"><span class="pp-ic">🌙</span><span class="pp-n" id="ppNight">0</span><span class="pp-l">night sessions</span></div>
+        <div class="pp-foot" id="ppFoot">—</div>
+      </div>
+      <div class="share-btns" style="margin-top:10px">
+        <button class="share-btn" onclick="copyPassport()">📋 COPY</button>
+        <button class="share-btn primary" onclick="sharePassport()">🔗 SHARE PASSPORT</button>
+      </div>
+      <div class="pp-reset"><button class="aod-btn" onclick="resetPassport()">Reset passport</button></div>
+    </div>
+
     <!-- Key metrics -->
     <div class="stats-grid">
       <div class="s-card">
@@ -567,7 +625,7 @@ body.golden .pl-lbl,body.golden .ac-call,body.golden .ar-call{text-shadow:0 0 10
     <div class="site-share-section">
       <div class="site-share-ttl">SHARE SKYWATCH</div>
       <div class="site-share-sub">Let your friends track planes overhead too!</div>
-      <div class="site-url">https://maitrey046.github.io/Flight-Radar-046/</div>
+      <div class="site-url" id="siteUrl">https://maitrey046.github.io/Radar-Squak/</div>
       <div class="site-share-btns">
         <button class="site-share-btn" onclick="copyWebsiteLink()">📋 Copy Link</button>
         <button class="site-share-btn" onclick="shareWebsite()">🔗 Share</button>
@@ -584,7 +642,7 @@ let UI_RGB='10,132,255';const UI={g:'#0a84ff',g2:'#64d2ff'};
 function G(a){return 'rgba('+(aodMode?'255,90,90':(skRgb()||(SK.warm?'255,179,64':UI_RGB)))+','+a+')'}
 
 /* ===== SKY STATE ENGINE ===== */
-const SK={state:'',fx:{kind:'',start:0,dur:0},trk:{hex:null,stage:'idle'},trails:{},sess:new Set(),q:[],busy:false,emptySince:Date.now(),tk:'',t:{},warm:false};
+const SK={state:'',fx:{kind:'',start:0,dur:0},trk:{hex:null,stage:'idle'},sess:new Set(),q:[],busy:false,emptySince:Date.now(),tk:'',t:{},warm:false};
 const LSJ=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
 const LSS=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 let SKFX=LSJ('skywatch.fx',{}),SEEN=LSJ('skywatch.seen',[]),SEENSET=new Set(SEEN),VIS=LSJ('skywatch.visits',{});
@@ -657,23 +715,48 @@ function trkUpdate(){
   });
   if(T.stage==='tracking'&&p&&lmap&&mapView)lmap.panTo([p.lat,p.lon]);
 }
-/* trails + reticle on the radar canvas */
+/* trails (persisted history, see TRAIL HISTORY) + reticle on the radar canvas */
 function drawFx(c,cx,cy,ppn){
   const rgb=skRgb()||(SK.warm?'255,179,64':UI_RGB),boost=SK.fx.kind==='sunrise'?1.7:1,k=60*Math.cos(LAT*Math.PI/180)*ppn;
-  const X=q=>cx+(q[1]-LON)*k,Y=q=>cy-(q[0]-LAT)*60*ppn;
-  planes.forEach(p=>{const tr=SK.trails[p.hex];if(!tr||tr.length<2)return;const lk=SK.trk.hex===p.hex;
-    for(let i=1;i<tr.length;i++){c.beginPath();c.moveTo(X(tr[i-1]),Y(tr[i-1]));c.lineTo(X(tr[i]),Y(tr[i]));c.strokeStyle='rgba('+rgb+','+Math.min(1,(lk?.9:.4)*boost*i/tr.length)+')';c.lineWidth=lk?2.2:1.3;c.stroke()}});
+  const X=lo=>cx+(lo-LON)*k,Y=la=>cy-(la-LAT)*60*ppn;
+  if(TH.cfg.mins>0){
+    const live=new Map();planes.forEach(p=>live.set(p.hex,p));
+    c.save();c.lineCap='round';c.lineJoin='round';
+    Object.keys(TH.d).forEach(h=>{
+      const lp=live.get(h);if(!lp&&!TH.cfg.ghost)return;
+      const tr=thPts(h);if(!tr||!tr.length)return;
+      const hot=SK.trk.hex===h||selHex===h,amax=(lp?(hot?.95:.45):.16)*boost;
+      const pts=tr.map(q=>[X(q[1]),Y(q[0])]);if(lp)pts.push([X(lp.lon),Y(lp.lat)]);
+      const m=pts.length;if(m<2)return;
+      const bands=Math.min(5,m-1),per=Math.ceil((m-1)/bands);
+      c.lineWidth=hot?2.2:1.3;c.setLineDash(lp?[]:[2,5]);
+      for(let b=0;b<bands;b++){
+        const s=b*per,e=Math.min(m-1,s+per);if(s>=e)continue;
+        c.beginPath();c.moveTo(pts[s][0],pts[s][1]);for(let i=s+1;i<=e;i++)c.lineTo(pts[i][0],pts[i][1]);
+        c.strokeStyle='rgba('+rgb+','+Math.min(1,amax*(b+1)/bands).toFixed(3)+')';c.stroke();
+      }
+    });
+    c.restore();
+  }
   const lp=planes.find(p=>p.hex===SK.trk.hex);if(!lp)return;
-  const x=X([lp.lat,lp.lon]),y=Y([lp.lat,lp.lon]),tk=SK.trk.stage==='tracking';
+  const x=X(lp.lon),y=Y(lp.lat),tk=SK.trk.stage==='tracking';
   c.save();c.translate(x,y);c.strokeStyle='#fff';c.lineWidth=1.6;c.rotate(tk?0:Date.now()/900);
   [0,1,2,3].forEach(i=>{c.rotate(Math.PI/2);c.beginPath();c.moveTo(-9,-20);c.lineTo(-20,-20);c.lineTo(-20,-9);c.stroke()});
   c.beginPath();c.arc(0,0,tk?26:15,0,7);c.setLineDash(tk?[]:[3,4]);c.strokeStyle='rgba('+rgb+',.9)';c.stroke();c.restore();
 }
 function mapTrails(){
-  if(!lmap)return;SK.mt=SK.mt||{};const rgb='rgb('+(skRgb()||(SK.warm?'255,179,64':UI_RGB))+')';
-  Object.keys(SK.trails).forEach(h=>{const tr=SK.trails[h];if(tr.length<2)return;const lk=SK.trk.hex===h,o={color:rgb,weight:lk?3:1.5,opacity:lk?.9:.4};
-    if(SK.mt[h])SK.mt[h].setLatLngs(tr).setStyle(o);else SK.mt[h]=L.polyline(tr,o).addTo(lmap)});
-  Object.keys(SK.mt).forEach(h=>{if(!SK.trails[h]){SK.mt[h].remove();delete SK.mt[h]}});
+  if(!lmap)return;SK.mt=SK.mt||{};
+  const rgb='rgb('+(skRgb()||(SK.warm?'255,179,64':UI_RGB))+')',live=new Map(),want=new Set();
+  planes.forEach(p=>live.set(p.hex,p));
+  if(TH.cfg.mins>0)Object.keys(TH.d).forEach(h=>{
+    const lp=live.get(h);if(!lp&&!TH.cfg.ghost)return;
+    const tr=thPts(h);if(!tr||!tr.length)return;
+    const ll=tr.map(q=>[q[0],q[1]]);if(lp)ll.push([lp.lat,lp.lon]);if(ll.length<2)return;
+    const hot=SK.trk.hex===h||selHex===h,o={color:rgb,weight:hot?3:1.5,opacity:lp?(hot?.9:.45):.2,dashArray:lp?null:'2 6'};
+    want.add(h);
+    if(SK.mt[h])SK.mt[h].setLatLngs(ll).setStyle(o);else SK.mt[h]=L.polyline(ll,o).addTo(lmap);
+  });
+  Object.keys(SK.mt).forEach(h=>{if(!want.has(h)){SK.mt[h].remove();delete SK.mt[h]}});
 }
 /* main tick */
 function skUpdate(){
@@ -697,10 +780,8 @@ function skUpdate(){
   const lv=n<10?'LOW':n<25?'MODERATE':'HIGH',seg=Math.min(10,Math.max(n?1:0,Math.round(n/2.5)));
   const tl=document.getElementById('tmL');if(tl){tl.textContent=lv;document.querySelectorAll('#tmeter .tmb i').forEach((e,i)=>e.classList.toggle('on',i<seg))}
   /* per-aircraft secrets, trails, counters */
-  const live=planes.map(p=>p.hex);Object.keys(SK.trails).forEach(k=>{if(!live.includes(k))delete SK.trails[k]});
   planes.forEach(p=>{
-    if(!p.hex||!isFinite(p.lat))return;const tr=SK.trails[p.hex]=SK.trails[p.hex]||[],l=tr[tr.length-1];
-    if(!l||Math.abs(l[0]-p.lat)+Math.abs(l[1]-p.lon)>4e-4){tr.push([p.lat,p.lon]);if(tr.length>40)tr.shift()}
+    if(!p.hex||!isFinite(p.lat))return;
     if(!SK.sess.has(p.hex)){SK.sess.add(p.hex);
       if(!SEENSET.has(p.hex)){SEENSET.add(p.hex);SEEN.push(p.hex);if(SEEN.length>3000)SEEN.shift();LSS('skywatch.seen',SEEN);
         if(SEENSET.size>=100&&skOnce('century',false))skCard('💯','CENTURY',null,'100 aircraft seen');
@@ -751,54 +832,374 @@ function setTheme(i){
   try{drawRadar();updateMap()}catch(e){}
 }
 function nextTheme(){setTheme(themeIdx+1)}
-/* ===== AR MODE ===== */
-let arStream=null,arActive=false,arHeading=null,arElev=0,lastAr=0,arWake=null;
+/* ===== TRAIL HISTORY (kept on this device, survives reloads) ===== */
+const TH_KEY='skywatch.trails.v1',TH_CFG='skywatch.trailcfg.v1',TH_KEEP_MIN=60,TH_GAP=12000,TH_MAXPTS=300;
+const TH={d:{},cfg:Object.assign({mins:15,ghost:true},LSJ(TH_CFG,{})),saved:0};
+/* TH.d[hex] = {c:callsign, t:type, s:lastSeen(ms), p:[[lat,lon,alt/100ft,ms], ...]} */
+(function thLoad(){
+  const raw=LSJ(TH_KEY,null);if(!raw||typeof raw!=='object')return;
+  const lim=Date.now()-TH_KEEP_MIN*60000;
+  Object.keys(raw).forEach(h=>{
+    const e=raw[h];if(!e||!Array.isArray(e.p))return;
+    const p=e.p.map(q=>[q[0],q[1],q[2],q[3]*1000]).filter(q=>isFinite(q[0])&&isFinite(q[1])&&q[3]>=lim);
+    if(p.length)TH.d[h]={c:e.c||'',t:e.t||'',p,s:p[p.length-1][3]};
+  });
+})();
+function thRecord(arr){
+  const now=Date.now(),keep=now-TH_KEEP_MIN*60000;
+  arr.forEach(p=>{
+    const h=p.hex||p.icao24;if(!h||!isFinite(p.lat)||!isFinite(p.lon)||p.alt_baro==='ground')return;   // airborne only
+    const e=TH.d[h]||(TH.d[h]={c:'',t:'',p:[],s:now});e.s=now;
+    const c=(p.flight||'').trim();if(c)e.c=c;if(p.t)e.t=p.t;
+    const alt=p.alt_baro??p.alt_geom,la=Math.round(p.lat*1e4)/1e4,lo=Math.round(p.lon*1e4)/1e4,l=e.p[e.p.length-1];
+    if(l&&(now-l[3]<TH_GAP||Math.abs(l[0]-la)+Math.abs(l[1]-lo)<2e-4))return;   // too soon / hasn't moved
+    e.p.push([la,lo,typeof alt==='number'?Math.round(alt/100):0,now]);
+    if(e.p.length>TH_MAXPTS)e.p.shift();
+  });
+  Object.keys(TH.d).forEach(h=>{
+    const e=TH.d[h];while(e.p.length&&e.p[0][3]<keep)e.p.shift();
+    if(!e.p.length||e.s<keep)delete TH.d[h];
+  });
+  thSave(false);
+}
+function thSave(force){
+  const now=Date.now();if(!force&&now-TH.saved<30000)return;TH.saved=now;
+  try{
+    const o={};
+    Object.keys(TH.d).sort((a,b)=>TH.d[b].s-TH.d[a].s).slice(0,150).forEach(h=>{
+      const e=TH.d[h],p=e.p.length>100?e.p.slice(-100):e.p;
+      o[h]={c:e.c,t:e.t,p:p.map(q=>[q[0],q[1],q[2],Math.round(q[3]/1000)])};
+    });
+    localStorage.setItem(TH_KEY,JSON.stringify(o));
+  }catch(e){}
+}
+function thPts(h){   // points inside the selected history window
+  const e=TH.d[h];if(!e)return null;
+  const lim=Date.now()-TH.cfg.mins*60000,p=e.p;let i=0;while(i<p.length&&p[i][3]<lim)i++;
+  return i?p.slice(i):p;
+}
+function thInfo(h){
+  const e=TH.d[h];if(!e||e.p.length<2)return '—';
+  return e.p.length+' points · '+Math.max(1,Math.round((e.p[e.p.length-1][3]-e.p[0][3])/60000))+' min';
+}
+function thRedraw(){try{drawRadar();updateMap()}catch(e){}}
+function thSetMins(m){TH.cfg.mins=m;LSS(TH_CFG,TH.cfg);thSyncUI();thRedraw()}
+function thToggleGhost(){TH.cfg.ghost=!TH.cfg.ghost;LSS(TH_CFG,TH.cfg);thSyncUI();thRedraw()}
+function thClear(){
+  TH.d={};try{localStorage.removeItem(TH_KEY)}catch(e){}
+  thSyncUI();thRedraw();showToast('Trail history cleared');
+}
+function thSyncUI(){
+  document.querySelectorAll('#trailSeg button').forEach(b=>b.classList.toggle('on',+b.dataset.m===TH.cfg.mins));
+  const g=document.getElementById('ghostBtn');if(g){g.classList.toggle('on',TH.cfg.ghost);g.textContent=TH.cfg.ghost?'ON':'OFF'}
+  const s=document.getElementById('trailInfo');
+  if(s){const ks=Object.keys(TH.d);let n=0;ks.forEach(k=>n+=TH.d[k].p.length);s.textContent=ks.length+' aircraft · '+n+' points stored on this device'}
+}
+window.addEventListener('pagehide',()=>thSave(true));
+document.addEventListener('visibilitychange',()=>{if(document.hidden)thSave(true)});
+
+/* ===== SKY PASSPORT (all-time, stored only on this device) =====
+   sighting       = an aircraft appearing on your radar (same aircraft counts again after 60 min away)
+   aircraft types = distinct ICAO type codes seen   |  airlines = distinct 3-letter callsign operators
+   sunrise run    = a day you logged traffic between civil dawn and ~sun +6 deg (rising)
+   night session  = a night (evening to noon) you logged traffic with the sun below -6 deg           */
+const PP_KEY='skywatch.passport.v1',PP_GAP=60*60000;
+const PP=(()=>{const d=LSJ(PP_KEY,null)||{};
+  return{since:d.since||Date.now(),sightings:+d.sightings||0,types:d.types||{},airlines:d.airlines||{},sunrise:d.sunrise||{},nights:d.nights||{},last:d.last||{},saved:0}})();
+function ppSave(force){
+  const now=Date.now();if(!force&&now-PP.saved<45000)return;PP.saved=now;
+  Object.keys(PP.last).forEach(h=>{if(now-PP.last[h]>PP_GAP)delete PP.last[h]});
+  LSS(PP_KEY,{since:PP.since,sightings:PP.sightings,types:PP.types,airlines:PP.airlines,sunrise:PP.sunrise,nights:PP.nights,last:PP.last});
+}
+function recordPassport(arr){
+  if(!arr||!arr.length)return;
+  const now=Date.now();let ch=false;
+  arr.forEach(p=>{
+    const h=p.hex||p.icao24;if(!h||p.alt_baro==='ground')return;   // only airborne aircraft count as sightings
+    const prev=PP.last[h]||0;PP.last[h]=now;
+    if(now-prev<=PP_GAP)return;
+    PP.sightings++;ch=true;
+    const t=String(p.t||'').toUpperCase();if(/^[A-Z0-9]{2,4}$/.test(t))PP.types[t]=(PP.types[t]||0)+1;
+    const m=/^([A-Z]{3})\d/.exec(String(p.flight||'').trim().toUpperCase());if(m)PP.airlines[m[1]]=(PP.airlines[m[1]]||0)+1;
+  });
+  const a=sunAlt(now),rising=sunAlt(now+3e5)>a;
+  if(rising&&a>-6&&a<6){const k=new Date(now).toDateString();if(!PP.sunrise[k]){PP.sunrise[k]=1;ch=true}}
+  if(a<-6){const x=new Date(now);if(x.getHours()<12)x.setDate(x.getDate()-1);const k=x.toDateString();if(!PP.nights[k]){PP.nights[k]=1;ch=true}}
+  ppSave(ch);
+}
+const ppN=n=>n.toLocaleString('en-US'),ppPl=(n,a,b)=>n===1?a:b;
+function ppStats(){return{sight:PP.sightings,types:Object.keys(PP.types).length,airl:Object.keys(PP.airlines).length,sun:Object.keys(PP.sunrise).length,night:Object.keys(PP.nights).length}}
+function renderPassport(){
+  const s=ppStats(),set=(id,n,a,b)=>{const el=document.getElementById(id);if(!el)return;el.textContent=ppN(n);if(el.nextElementSibling)el.nextElementSibling.textContent=ppPl(n,a,b)};
+  set('ppSight',s.sight,'sighting','sightings');set('ppTypes',s.types,'aircraft type','aircraft types');set('ppAirl',s.airl,'airline','airlines');
+  set('ppSun',s.sun,'sunrise run','sunrise runs');set('ppNight',s.night,'night session','night sessions');
+  const f=document.getElementById('ppFoot');
+  if(f)f.textContent='STAMPED SINCE '+new Date(PP.since).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}).toUpperCase();
+}
+function ppBox(){   // the ASCII passport card; emoji count as 2 terminal cells (a plain "✈" as 1)
+  const s=ppStats();
+  const rows=[['👁',ppN(s.sight),ppPl(s.sight,'sighting','sightings')],['✈',ppN(s.types),ppPl(s.types,'aircraft type','aircraft types')],
+    ['🌎',ppN(s.airl),ppPl(s.airl,'airline','airlines')],['🌅',ppN(s.sun),ppPl(s.sun,'sunrise run','sunrise runs')],
+    ['🌙',ppN(s.night),ppPl(s.night,'night session','night sessions')]].map(r=>' '+r[0]+' '+r[1]+' '+r[2]);
+  const cw=str=>{let n=0;for(const ch of str){const c=ch.codePointAt(0);if(c===0xFE0F||c===0x200D)continue;n+=c>=0x1F000?2:1}return n};
+  const W=Math.max(22,...rows.map(r=>cw(r)+1)),pad=str=>str+' '.repeat(W-cw(str)),title='SKY PASSPORT',l=Math.floor((W-title.length)/2),bar=ch=>ch.repeat(W);
+  return ['╔'+bar('═')+'╗','║'+pad(' '.repeat(l)+title)+'║','╠'+bar('═')+'╣','║'+' '.repeat(W)+'║',
+    ...rows.map(r=>'║'+pad(r)+'║'),'║'+' '.repeat(W)+'║','╚'+bar('═')+'╝'].join('\n');
+}
+function buildPassportText(){return ppBox()+'\n\n✈ My SkyWatch passport — track planes near you 👇\n'+SITE_URL}
+async function copyPassport(){
+  try{await navigator.clipboard.writeText(buildPassportText());showToast('Passport copied!')}catch(e){showToast('Copy failed — try Share')}
+}
+async function sharePassport(){
+  const text=buildPassportText();
+  if(navigator.share){try{await navigator.share({title:'My Sky Passport',text})}catch(e){}}else await copyPassport();
+}
+function resetPassport(){
+  if(!confirm('Reset your Sky Passport? All-time counts on this device will be cleared.'))return;
+  PP.since=Date.now();PP.sightings=0;PP.types={};PP.airlines={};PP.sunrise={};PP.nights={};PP.last={};ppSave(true);renderPassport();showToast('Passport reset');
+}
+
+/* ===== AR MODE v2 =====
+   - phone orientation as a quaternion with an adaptive low-pass (calm when still, instant when panning)
+   - true pin-hole projection (handles roll, any screen rotation, real camera FOV + cover-crop)
+   - aircraft dead-reckoned between ADS-B polls (position, speed, climb rate) with a decaying correction,
+     so planes glide instead of jumping every few seconds
+   - markers are persistent elements moved with translate3d; no innerHTML rebuilds, no backdrop-filter  */
+let OBS_M=0;                                   // observer ground elevation (m), filled from the weather API
 const rad=d=>d*Math.PI/180,deg=r=>r*180/Math.PI;
 function bearingTo(la1,lo1,la2,lo2){const p1=rad(la1),p2=rad(la2),dl=rad(lo2-lo1);return (deg(Math.atan2(Math.sin(dl)*Math.cos(p2),Math.cos(p1)*Math.sin(p2)-Math.sin(p1)*Math.cos(p2)*Math.cos(dl)))+360)%360}
-function camOrient(a,b,g){
-  const z=rad(a||0),x=rad(b||0),y=rad(g||0),cX=Math.cos(x),cY=Math.cos(y),cZ=Math.cos(z),sX=Math.sin(x),sY=Math.sin(y),sZ=Math.sin(z);
-  const m13=cY*sZ*sX+cZ*sY,m23=sZ*sY-cZ*cY*sX,m33=cX*cY;
-  return {heading:(deg(Math.atan2(-m13,-m23))+360)%360,elevation:deg(Math.asin(Math.max(-1,Math.min(1,-m33))))};
+const AR_FOV_LONG=66,AR_MAX_TAGS=22,AR_POLL_MS=5000,AR_STALE_MS=25000,AR_CORR_TAU=2,AR_TMAX=400;
+const PLANE_PATH='M12 2c.8 0 1.5.9 1.5 2v5.5l8 4.5v2l-8-2.3V19l2 1.6V22l-3.5-1-3.5 1v-1.4l2-1.6v-4.8l-8 2.3v-2l8-4.5V4c0-1.1.7-2 1.5-2z';
+const AR={on:false,stream:null,wake:null,raf:0,last:0,q:null,tq:null,off:0,offOK:false,absolute:false,noComp:false,evt:'',
+  trk:new Map(),els:new Map(),focus:null,pollT:0,W:0,H:0,vw:0,vh:0,f:900,cs:1,sn:0,uiAt:0,m:null,rgb:'10,132,255',
+  tx:new Float32Array(AR_TMAX),ty:new Float32Array(AR_TMAX),
+  video:null,box:null,cv:null,cx:null,guide:null,gt:null,info:null,hint:null};
+const _v=[0,0,0],_p=[0,0,0,0,0];
+const qMul=(a,b)=>[a[3]*b[0]+a[0]*b[3]+a[1]*b[2]-a[2]*b[1],a[3]*b[1]-a[0]*b[2]+a[1]*b[3]+a[2]*b[0],a[3]*b[2]+a[0]*b[1]-a[1]*b[0]+a[2]*b[3],a[3]*b[3]-a[0]*b[0]-a[1]*b[1]-a[2]*b[2]];
+function eulerQ(a,b,g){   // W3C deviceorientation Z-X'-Y'' -> quaternion [x,y,z,w] (device -> earth ENU)
+  const x=rad(b)/2,y=rad(g)/2,z=rad(a)/2,cX=Math.cos(x),cY=Math.cos(y),cZ=Math.cos(z),sX=Math.sin(x),sY=Math.sin(y),sZ=Math.sin(z);
+  return [sX*cY*cZ-cX*sY*sZ,cX*sY*cZ+sX*cY*sZ,cX*cY*sZ+sX*sY*cZ,cX*cY*cZ-sX*sY*sZ];
 }
-function onOrient(e){
+function qMat(q){const[x,y,z,w]=q;return[1-2*(y*y+z*z),2*(x*y-z*w),2*(x*z+y*w),2*(x*y+z*w),1-2*(x*x+z*z),2*(y*z-x*w),2*(x*z-y*w),2*(y*z+x*w),1-2*(x*x+y*y)]}
+function arEnuTo(lat,lon,ft){   // -> _v = [east, north, up] metres from the watch point (with earth-curvature drop)
+  const e=(lon-LON)*111320*Math.cos(rad(LAT)),n=(lat-LAT)*110574;
+  _v[0]=e;_v[1]=n;_v[2]=ft*0.3048-OBS_M-(e*e+n*n)*0.87/12742000;
+}
+function arProj(e,n,u){   // earth vector -> screen. fills _p=[x,y,depth,sx,sy]; true if in front of the camera
+  const m=AR.m;
+  const dx=m[0]*e+m[3]*n+m[6]*u,dy=m[1]*e+m[4]*n+m[7]*u,dz=m[2]*e+m[5]*n+m[8]*u;
+  const sx=dx*AR.cs-dy*AR.sn,sy=dx*AR.sn+dy*AR.cs,dep=-dz;
+  _p[2]=dep;_p[3]=sx;_p[4]=sy;
+  if(dep<=1){_p[0]=NaN;_p[1]=NaN;return false}
+  _p[0]=AR.W/2+AR.f*sx/dep;_p[1]=AR.H/2-AR.f*sy/dep;
+  return Math.abs(_p[0])<1e5&&Math.abs(_p[1])<1e5;
+}
+function arSize(){
+  const o=document.getElementById('arOverlay');if(!o||!AR.video)return;
+  AR.W=o.clientWidth;AR.H=o.clientHeight;
+  const vw=AR.video.videoWidth||1280,vh=AR.video.videoHeight||720;AR.vw=AR.video.videoWidth;AR.vh=AR.video.videoHeight;
+  AR.f=(Math.max(vw,vh)/2)/Math.tan(rad(AR_FOV_LONG)/2)*Math.max(AR.W/vw,AR.H/vh);   // focal length in screen px (object-fit:cover)
+  const a=(screen.orientation&&typeof screen.orientation.angle==='number')?screen.orientation.angle:(typeof window.orientation==='number'?((window.orientation%360)+360)%360:0);
+  AR.cs=Math.cos(rad(a));AR.sn=Math.sin(rad(a));
+  const dpr=Math.min(2,window.devicePixelRatio||1);
+  AR.cv.width=Math.round(AR.W*dpr);AR.cv.height=Math.round(AR.H*dpr);AR.cx.setTransform(dpr,0,0,dpr,0,0);
+}
+function arOrient(e){
   if(e.alpha==null||e.beta==null||e.gamma==null)return;
-  const o=camOrient(e.alpha,e.beta,e.gamma);
-  arHeading=(e.webkitCompassHeading!=null?e.webkitCompassHeading:o.heading+360)%360;arElev=o.elevation;
-  const t=Date.now();if(arActive&&t-lastAr>100){lastAr=t;renderAR()}
-}
-function renderAR(){
-  const box=document.getElementById('arMarkers');
-  if(!arActive||arHeading==null){box.innerHTML='';return}
-  const HF=60,VF=45;let html='';
-  planes.filter(p=>isFinite(p.lat)&&isFinite(p.lon)&&p._distKm!=null).sort((a,b)=>a._distKm-b._distKm).slice(0,15).forEach(p=>{
-    const rel=((bearingTo(LAT,LON,p.lat,p.lon)-arHeading+540)%360)-180;if(Math.abs(rel)>HF/2+8)return;
-    const ft=typeof (p.alt_baro??p.alt_geom)==='number'?(p.alt_baro??p.alt_geom):0;
-    const el=p._distKm>0?deg(Math.atan2(ft*0.3048,p._distKm*1000)):0,se=el-arElev;if(Math.abs(se)>VF/2+8)return;
-    const x=Math.max(4,Math.min(96,50+rel/(HF/2)*50)),y=Math.max(8,Math.min(94,50-se/(VF/2)*50));
-    const over=p._distKm*1000<notifRadius*1000,call=(p.flight||p.hex||'—').trim();
-    html+='<div class="ar-tag'+(over?' over':'')+'" style="left:'+x+'%;top:'+y+'%"><div class="ar-call">'+call+'</div><div class="ar-meta">FL'+String(Math.round(ft/100)).padStart(3,'0')+' · '+p._distKm.toFixed(1)+' km</div></div>';
-  });
-  box.innerHTML=html;
-}
-async function openAR(){
-  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){showToast&&showToast('Camera not available on this device');return}
-  try{
-    if(typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function'){
-      if(await DeviceOrientationEvent.requestPermission()!=='granted'){showToast&&showToast('Motion access denied');return}
+  AR.tq=eulerQ(e.alpha,e.beta,e.gamma);
+  if(e.absolute===true||e.type==='deviceorientationabsolute'){AR.absolute=true;AR.off=0;AR.offOK=true;return}   // Android: alpha is already true-north
+  if(typeof e.webkitCompassHeading==='number'&&e.webkitCompassHeading>=0){   // iOS: alpha is arbitrary, lock it to the compass
+    const m=qMat(AR.tq),hz=-m[8];
+    if(Math.abs(hz)<0.9){   // heading is meaningless when looking straight up/down
+      const raw=(deg(Math.atan2(-m[2],-m[5]))+360)%360,want=((e.webkitCompassHeading-raw+540)%360)-180;
+      if(!AR.offOK){AR.off=want;AR.offOK=true}else AR.off+=(((want-AR.off)+540)%360-180)*0.04;
     }
-    arStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
-  }catch(e){showToast&&showToast('Camera permission denied');return}
-  document.getElementById('arVideo').srcObject=arStream;
-  document.getElementById('arOverlay').hidden=false;arActive=true;
-  window.addEventListener('ondeviceorientationabsolute' in window?'deviceorientationabsolute':'deviceorientation',onOrient,true);
-  try{arWake=await navigator.arWake.request('screen')}catch(e){}
-  const hint=document.getElementById('arHint');hint.style.opacity=1;setTimeout(()=>hint.style.opacity=0,6000);
+  }else if(!AR.offOK)AR.noComp=true;
+}
+/* aircraft state: last fix + velocity, extrapolated; a correction vector bridges old and new fix and decays */
+function arExtrap(T,now){const f=T.fx,dt=Math.min(45,Math.max(0,(now-f.t)/1000));return[f.e+f.ve*dt,f.n+f.vn*dt,f.u+f.vu*dt]}
+function arPos(T,now){const x=arExtrap(T,now),k=Math.exp(-(now-T.ct)/1000/AR_CORR_TAU);return[x[0]+T.c[0]*k,x[1]+T.c[1]*k,x[2]+T.c[2]*k]}
+function arIngest(arr,fetchedAt){
+  const now=Date.now(),at=fetchedAt||now;
+  arr.forEach(p=>{
+    const h=p.hex||p.icao24;if(!h||!isFinite(p.lat)||!isFinite(p.lon))return;
+    const alt=p.alt_baro??p.alt_geom,ground=alt==='ground',ft=typeof alt==='number'?alt:0;
+    const age=Math.min(30,+(p.seen_pos??p.seen??0)||0)*1000;
+    arEnuTo(p.lat,p.lon,ft);
+    const gs=(+p.gs||0)*0.514444,tr=rad(+(p.track??p.true_heading??0)||0),vr=+(p.baro_rate??p.geom_rate??0)||0;
+    let T=AR.trk.get(h),prev=null;
+    if(!T){T={h,p,fx:null,c:[0,0,0],ct:now,seen:now,g:false,on:false,dist:0,x:0,y:0,pos:[0,0,0],cd:0,yo:0,ft0:0,vrf:0};AR.trk.set(h,T)}
+    else if(T.fx)prev=arPos(T,now);
+    T.fx={t:at-age,e:_v[0],n:_v[1],u:_v[2],ve:gs*Math.sin(tr),vn:gs*Math.cos(tr),vu:ground?0:vr*0.00508};
+    T.p=p;T.seen=now;T.g=ground;T.ft0=ft;T.vrf=ground?0:vr;
+    if(prev){const x=arExtrap(T,now),c=[prev[0]-x[0],prev[1]-x[1],prev[2]-x[2]];T.c=Math.hypot(c[0],c[1],c[2])<3000?c:[0,0,0]}else T.c=[0,0,0];
+    T.ct=now;
+  });
+}
+function arEl(T){
+  let el=AR.els.get(T.h);if(el)return el;
+  el=document.createElement('div');el.className='ar-pt';
+  el.innerHTML='<div class="ar-ic"><svg viewBox="0 0 24 24"><path d="'+PLANE_PATH+'"/></svg></div><div class="ar-tag"><div class="ar-call"><span></span><small></small></div><div class="ar-meta"></div><div class="ar-ext"></div></div>';
+  el._ic=el.firstChild;el._c=el.querySelector('.ar-call span');el._s=el.querySelector('.ar-call small');el._m=el.querySelector('.ar-meta');el._x=el.querySelector('.ar-ext');
+  el._v=false;el._txt=null;el._stem=22;el._yo=0;el._z=0;el._ang=undefined;el._cls='';
+  AR.box.appendChild(el);void el.offsetWidth;AR.els.set(T.h,el);return el;
+}
+function arDrop(h){const el=AR.els.get(h);if(el){el.remove();AR.els.delete(h)}AR.trk.delete(h)}
+function arTrail(T,hot){
+  const e=TH.d[T.h];if(!e||TH.cfg.mins<=0)return;
+  const lim=Date.now()-TH.cfg.mins*60000,P=e.p,c=AR.cx;let n=0;
+  for(let i=0;i<P.length&&n<AR_TMAX-1;i++){
+    if(P[i][3]<lim)continue;
+    arEnuTo(P[i][0],P[i][1],P[i][2]*100);
+    if(arProj(_v[0],_v[1],_v[2])){AR.tx[n]=_p[0];AR.ty[n]=_p[1]}else{AR.tx[n]=NaN;AR.ty[n]=NaN}
+    n++;
+  }
+  AR.tx[n]=T.x;AR.ty[n]=T.y;n++;      // finish at the aircraft's live position
+  if(n<2)return;
+  const bands=Math.min(5,n-1),per=Math.ceil((n-1)/bands);
+  c.lineWidth=hot?2.6:1.7;
+  for(let b=0;b<bands;b++){
+    const s=b*per,e2=Math.min(n-1,s+per);let pen=false;c.beginPath();
+    for(let i=s;i<=e2;i++){const x=AR.tx[i],y=AR.ty[i];if(x!==x){pen=false;continue}if(pen)c.lineTo(x,y);else{c.moveTo(x,y);pen=true}}
+    c.strokeStyle='rgba('+AR.rgb+','+((b+1)/bands*(hot?.95:.6)).toFixed(2)+')';c.stroke();
+  }
+}
+const arFL=ft=>'FL'+String(Math.max(0,Math.round(ft/100))).padStart(3,'0');
+const CARD=['N','NE','E','SE','S','SW','W','NW'];
+function arFrame(ts){
+  if(!AR.on)return;
+  AR.raf=requestAnimationFrame(arFrame);
+  const dt=Math.min(.1,Math.max(.001,(ts-(AR.last||ts))/1000));AR.last=ts;
+  if(!AR.tq||AR.W<10)return;
+  const now=Date.now();
+  if(AR.video.videoWidth!==AR.vw||AR.video.videoHeight!==AR.vh)arSize();
+  /* 1. orientation: adaptive low-pass on the quaternion */
+  const tq=AR.tq;let q=AR.q;
+  if(!q)q=AR.q=tq.slice();
+  else{
+    const d=q[0]*tq[0]+q[1]*tq[1]+q[2]*tq[2]+q[3]*tq[3],sg=d<0?-1:1,ang=2*Math.acos(Math.min(1,Math.abs(d)));
+    const k=1-Math.exp(-dt/(0.18-0.15*Math.min(1,ang/0.1)));   // 180 ms when still -> 30 ms while panning
+    q[0]+=(sg*tq[0]-q[0])*k;q[1]+=(sg*tq[1]-q[1])*k;q[2]+=(sg*tq[2]-q[2])*k;q[3]+=(sg*tq[3]-q[3])*k;
+    const nm=Math.hypot(q[0],q[1],q[2],q[3])||1;q[0]/=nm;q[1]/=nm;q[2]/=nm;q[3]/=nm;
+  }
+  const oh=-rad(AR.off)/2;AR.m=qMat(qMul([0,0,Math.sin(oh),Math.cos(oh)],q));
+  AR.rgb=UI_RGB;
+  /* 2. project every aircraft from its dead-reckoned position */
+  const vis=[];
+  AR.trk.forEach((T,h)=>{
+    if(now-T.seen>60000){arDrop(h);return}
+    T.on=false;if(T.g||now-T.seen>AR_STALE_MS)return;
+    const pos=T.pos=arPos(T,now);T.dist=Math.hypot(pos[0],pos[1]);
+    if(arProj(pos[0],pos[1],pos[2])&&_p[0]>-60&&_p[0]<AR.W+60&&_p[1]>-60&&_p[1]<AR.H+60){T.x=_p[0];T.y=_p[1];T.on=true;vis.push(T)}
+  });
+  vis.sort((a,b)=>a.dist-b.dist);const sel=vis.slice(0,AR_MAX_TAGS);
+  /* focus = aircraft nearest the crosshair (with hysteresis so it doesn't flicker) */
+  let best=null,bd=1e9;
+  sel.forEach(T=>{T.cd=Math.hypot(T.x-AR.W/2,T.y-AR.H/2);if(T.cd<bd){bd=T.cd;best=T}});
+  const cur=AR.focus&&sel.find(T=>T.h===AR.focus);
+  if(!(cur&&cur.cd<Math.max(bd*1.3,80)))AR.focus=best&&bd<Math.min(AR.W,AR.H)*.3?best.h:null;
+  /* 3. trails */
+  AR.cx.clearRect(0,0,AR.W,AR.H);AR.cx.lineCap='round';AR.cx.lineJoin='round';
+  sel.forEach(T=>arTrail(T,T.h===AR.focus||T.h===SK.trk.hex));
+  /* 4. declutter labels (nearest + focus win), then move the elements */
+  const uiTick=now-AR.uiAt>250;if(uiTick)AR.uiAt=now;
+  const selSet=new Set(sel.map(T=>T.h));
+  AR.els.forEach((el,h)=>{if(!selSet.has(h)&&el._v){el._v=false;el.classList.remove('vis')}});
+  const placed=[];
+  sel.slice().sort((a,b)=>((b.h===AR.focus)-(a.h===AR.focus))||(a.dist-b.dist)).forEach(T=>{
+    const f=T.h===AR.focus,w=f?156:116,hg=f?64:40;T.yo=0;
+    for(let lv=0;lv<4;lv++){
+      const top=T.y-22-lv*(hg+4)-hg,bot=top+hg,l=T.x-w/2,r=l+w;let hit=false;
+      for(let i=0;i<placed.length;i++){const o=placed[i];if(l<o.r&&r>o.l&&top<o.b&&bot>o.t){hit=true;break}}
+      if(!hit||lv===3){T.yo=lv*(hg+4);placed.push({l,r,t:top,b:bot});break}
+    }
+  });
+  sel.forEach(T=>{
+    const el=arEl(T),foc=T.h===AR.focus,f=T.fx;
+    if(!el._v){el._v=true;el.classList.add('vis');el._txt=null}
+    el.style.transform='translate3d('+T.x.toFixed(1)+'px,'+T.y.toFixed(1)+'px,0)';
+    /* glyph points the way the aircraft is actually moving on screen */
+    if(arProj(T.pos[0]+f.ve*6,T.pos[1]+f.vn*6,T.pos[2]+f.vu*6)){
+      const ddx=_p[0]-T.x,ddy=_p[1]-T.y;
+      if(Math.hypot(ddx,ddy)>3){const a=deg(Math.atan2(ddx,-ddy));if(el._ang===undefined||Math.abs(((a-el._ang+540)%360)-180)>1.5){el._ang=a;el._ic.style.transform='rotate('+a.toFixed(1)+'deg)'}}
+    }
+    const cls=(T.dist<notifRadius*1000?'o':'')+(SK.trk.hex===T.h?'t':'')+(foc?'f':'');
+    if(cls!==el._cls){el._cls=cls;el.classList.toggle('over',cls.includes('o'));el.classList.toggle('tgt',cls.includes('t'));el.classList.toggle('focus',foc)}
+    el._yo+=(T.yo-el._yo)*(1-Math.exp(-dt/.12));
+    const stem=22+el._yo;if(Math.abs(stem-el._stem)>.4){el._stem=stem;el.style.setProperty('--stem',stem.toFixed(1)+'px')}
+    const z=foc?20000:Math.max(1,10000-Math.round(T.dist/20));if(z!==el._z){el._z=z;el.style.zIndex=z}
+    if(uiTick||el._txt===null){
+      const p=T.p,call=(p.flight||p.hex||'—').trim(),ft=T.ft0+T.vrf*(now-f.t)/60000;
+      const tr=T.vrf>300?' ▲':T.vrf<-300?' ▼':'';
+      const meta=arFL(ft)+tr+' · '+(T.dist/1000).toFixed(1)+' km';
+      const ext=(AIRL[call.slice(0,3)]?AIRL[call.slice(0,3)]+' · ':'')+(p.gs?Math.round(p.gs)+' kt':'—')+(Math.abs(T.vrf)>=100?' · '+(T.vrf>0?'+':'')+Math.round(T.vrf).toLocaleString()+' fpm':'');
+      const key=call+'|'+(p.t||'')+'|'+meta+'|'+ext;
+      if(key!==el._txt){el._txt=key;el._c.textContent=call;el._s.textContent=p.t||'';el._m.textContent=meta;el._x.textContent=ext}
+    }
+  });
+  /* 5. guide arrow to the locked / tracked aircraft when it is off-screen */
+  const gT=SK.trk.hex?AR.trk.get(SK.trk.hex):null;
+  if(gT&&gT.pos&&!gT.g&&!gT.on&&now-gT.seen<AR_STALE_MS){
+    arProj(gT.pos[0],gT.pos[1],gT.pos[2]);
+    let ux=_p[3],uy=-_p[4];const len=Math.hypot(ux,uy);if(len<1e-6){ux=0;uy=1}else{ux/=len;uy/=len}
+    const t=Math.min((AR.W/2-40)/Math.max(Math.abs(ux),1e-4),(AR.H/2-110)/Math.max(Math.abs(uy),1e-4));
+    AR.guide.style.transform='translate3d('+(AR.W/2+ux*t).toFixed(1)+'px,'+(AR.H/2+uy*t).toFixed(1)+'px,0)';
+    AR.guide.firstChild.style.transform='rotate('+deg(Math.atan2(ux,-uy)).toFixed(1)+'deg)';
+    if(uiTick)AR.gt.textContent=(gT.p.flight||gT.p.hex||'').trim()+' · '+(gT.dist/1000).toFixed(1)+' km';
+    AR.guide.classList.add('vis');
+  }else AR.guide.classList.remove('vis');
+  /* 6. heading read-out */
+  if(uiTick){
+    const m=AR.m,h=(deg(Math.atan2(-m[2],-m[5]))+360)%360,el=deg(Math.asin(Math.max(-1,Math.min(1,-m[8]))));
+    AR.info.textContent=CARD[Math.round(h/45)%8]+' '+String(Math.round(h)).padStart(3,'0')+'°  ·  '+(el>=0?'+':'')+Math.round(el)+'°  ·  '+sel.length+' ✈';
+  }
+}
+async function arWakeReq(){try{if(navigator.wakeLock&&!AR.wake)AR.wake=await navigator.wakeLock.request('screen')}catch(e){}}
+function arVis(){if(AR.on&&!document.hidden){AR.wake=null;arWakeReq()}}
+async function openAR(){
+  if(AR.on)return;
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){showToast('Camera not available on this device');return}
+  try{   // iOS needs this inside the tap handler, before any other await
+    if(typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function'){
+      if(await DeviceOrientationEvent.requestPermission()!=='granted'){showToast('Motion access denied');return}
+    }
+  }catch(e){showToast('Motion access denied');return}
+  try{
+    AR.stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720},frameRate:{ideal:30}},audio:false});
+  }catch(e){showToast('Camera permission denied');return}
+  AR.video=document.getElementById('arVideo');AR.box=document.getElementById('arMarkers');AR.cv=document.getElementById('arTrails');AR.cx=AR.cv.getContext('2d');
+  AR.guide=document.getElementById('arGuide');AR.gt=document.getElementById('arGuideT');AR.info=document.getElementById('arInfo');AR.hint=document.getElementById('arHint');
+  AR.video.srcObject=AR.stream;AR.video.onloadedmetadata=arSize;try{AR.video.play()}catch(e){}
+  document.getElementById('arOverlay').hidden=false;
+  Object.assign(AR,{on:true,q:null,tq:null,off:0,offOK:false,absolute:false,noComp:false,focus:null,last:0,uiAt:0});
+  arSize();arIngest(planes,lastFetch||Date.now());
+  AR.evt='ondeviceorientationabsolute' in window?'deviceorientationabsolute':'deviceorientation';
+  window.addEventListener(AR.evt,arOrient,true);window.addEventListener('resize',arSize);
+  if(screen.orientation&&screen.orientation.addEventListener)screen.orientation.addEventListener('change',arSize);
+  document.addEventListener('visibilitychange',arVis);
+  AR.pollT=setInterval(()=>{if(!document.hidden&&!diag.running)fetchPlanes()},AR_POLL_MS);   // fresher fixes while AR is open
+  arWakeReq();
+  AR.raf=requestAnimationFrame(arFrame);
+  AR.hint.textContent='Point your camera at the sky and pan slowly';AR.hint.style.opacity=1;setTimeout(()=>{if(AR.hint)AR.hint.style.opacity=0},6000);
+  setTimeout(()=>{
+    if(!AR.on)return;
+    if(!AR.tq){AR.hint.textContent='Motion sensors unavailable on this device or browser';AR.hint.style.opacity=1}
+    else if(AR.noComp){AR.hint.textContent='Compass unavailable here — markers may be off';AR.hint.style.opacity=1}
+  },2500);
 }
 function closeAR(){
-  arActive=false;if(arStream){arStream.getTracks().forEach(t=>t.stop());arStream=null}
-  window.removeEventListener('deviceorientationabsolute',onOrient,true);window.removeEventListener('deviceorientation',onOrient,true);
-  document.getElementById('arOverlay').hidden=true;document.getElementById('arMarkers').innerHTML='';
-  try{arWake&&arWake.release()}catch(e){}arWake=null;
+  if(!AR.on&&!AR.stream)return;
+  AR.on=false;cancelAnimationFrame(AR.raf);clearInterval(AR.pollT);
+  window.removeEventListener('deviceorientationabsolute',arOrient,true);window.removeEventListener('deviceorientation',arOrient,true);
+  window.removeEventListener('resize',arSize);
+  if(screen.orientation&&screen.orientation.removeEventListener)screen.orientation.removeEventListener('change',arSize);
+  document.removeEventListener('visibilitychange',arVis);
+  if(AR.stream){AR.stream.getTracks().forEach(t=>t.stop());AR.stream=null}
+  const v=document.getElementById('arVideo');if(v)v.srcObject=null;
+  document.getElementById('arOverlay').hidden=true;
+  if(AR.box)AR.box.innerHTML='';AR.els.clear();AR.trk.clear();
+  if(AR.guide)AR.guide.classList.remove('vis');
+  try{AR.wake&&AR.wake.release()}catch(e){}AR.wake=null;
 }
 document.addEventListener('DOMContentLoaded',()=>{
   const gr=document.getElementById('themeGrid');
@@ -853,7 +1254,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 // ═══════════════════════════════════════════════════════
 // CONSTANTS & STATE
 // ═══════════════════════════════════════════════════════
-const SITE_URL = 'https://maitrey046.github.io/Flight-Radar-046/';
+const SITE_URL = 'https://maitrey046.github.io/Radar-Squak/';
 const MAX_ALT_FT = 15000;
 
 let LAT = 18.5204, LON = 73.8567, LOC_NAME = 'Pune, India';
@@ -990,6 +1391,7 @@ async function fetchWeather() {
     if (!r.ok) throw new Error(r.status);
     const d = await r.json();
     weatherData = d.current || null;
+    if (typeof d.elevation === 'number') OBS_M = d.elevation;   // watch-point ground height, used by AR
     renderWeather();
   } catch (e) {
     weatherData = null;
@@ -1736,6 +2138,9 @@ function updatePlanes(raw) {
   });
   prevInRangeHexes = inRange;
 
+  // Trail history, Sky Passport, AR dead-reckoning
+  try { thRecord(raw); recordPassport(raw); arIngest(raw); } catch (e) { console.warn('[SkyWatch] hook failed', e); }
+
   // Record stats
   recordPlanes(raw);
 
@@ -1836,6 +2241,7 @@ function selectPlane(hex) {
     <div class="di"><div class="di-label">HEX / ICAO</div><div class="di-val">${p.hex || '—'}</div></div>
     <div class="di"><div class="di-label">SQUAWK</div><div class="di-val">${p.squawk || '—'}</div></div>
     <div class="di"><div class="di-label">POSITION</div><div class="di-val">${p.lat.toFixed(4)}°N, ${p.lon.toFixed(4)}°E</div></div>
+    <div class="di"><div class="di-label">TRAIL HISTORY</div><div class="di-val">${thInfo(hex)}</div></div>
   `;
   document.getElementById('detailOverlay').classList.add('open');
   drawRadar();
@@ -1858,7 +2264,7 @@ function togglePanel() {
 // ═══════════════════════════════════════════════════════
 // SETTINGS
 // ═══════════════════════════════════════════════════════
-function openSettings() { document.getElementById('settingsOverlay').classList.add('open'); renderDiag(); }
+function openSettings() { document.getElementById('settingsOverlay').classList.add('open'); renderDiag(); thSyncUI(); }
 function closeSettings(e) {
   if (e && e.target !== document.getElementById('settingsOverlay')) return;
   document.getElementById('settingsOverlay').classList.remove('open');
@@ -2003,6 +2409,7 @@ function closeStats() { document.getElementById('statsOverlay').classList.remove
 
 function refreshStatsUI() {
   renderWeather();
+  renderPassport();
   const today = new Date().toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
   document.getElementById('statsDate').textContent = today;
   document.getElementById('scDate').textContent = `📍 ${LOC_NAME.split(',')[0]} · ${today} · skywatch`;
@@ -2182,6 +2589,8 @@ async function init() {
   loadAppSettings();
 
   document.getElementById('currentLocLabel').textContent = LOC_NAME;
+  const siteEl = document.getElementById('siteUrl'); if (siteEl) siteEl.textContent = SITE_URL;
+  thSyncUI();
   document.getElementById('rangeSlider').value = RANGE_NM;
   document.getElementById('rangeVal').textContent = `${RANGE_NM} nm`;
   document.getElementById('radiusSlider').value = notifRadius;
