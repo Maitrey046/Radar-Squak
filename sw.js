@@ -1,6 +1,6 @@
 // ─── SKYWATCH SERVICE WORKER v4 ─────────────────────────────
 // Persisted watch config so alerts can continue even after the tab closes.
-const CACHE = 'skywatch-v10';
+const CACHE = 'skywatch-v11';
 const STATE_REQ = new Request('./__skywatch_state__.json');
 
 let config = {

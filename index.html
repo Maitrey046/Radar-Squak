@@ -275,9 +275,13 @@ body.map-view .map-wrap{display:block}
 body.map-view #viewBtn{background:var(--g);border-color:transparent}
 .wx{min-width:120px;max-width:170px}.wx .stat-lbl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .leaflet-container{font-family:var(--font);background:#0b0b0d}
+.leaflet-tile-pane{filter:invert(1) hue-rotate(205deg) brightness(.78) contrast(.92) saturate(.55)}
 .home-pin{width:16px;height:16px;border-radius:50%;background:var(--g);border:3px solid #fff;box-shadow:0 0 0 7px rgba(10,132,255,.3)}
 .plane-pin{width:30px;height:30px;color:var(--g2);filter:drop-shadow(0 2px 4px rgba(0,0,0,.6));transition:transform .6s linear}
 .plane-pin svg{width:100%;height:100%;fill:currentColor}.plane-pin.over{color:var(--amber)}.plane-pin.sel{color:#fff;filter:drop-shadow(0 0 8px #0a84ff)}
+.pin-wrap{position:relative;width:30px;height:30px}
+.pl-lbl{display:none;position:absolute;left:30px;top:6px;white-space:nowrap;background:rgba(28,28,30,.85);border:.5px solid var(--edge);color:#fff;font:600 11px var(--font);padding:2px 8px;border-radius:99px}
+.pl-lbl.on,.lbl-all .pl-lbl{display:block}
 .pl-tip{background:rgba(28,28,30,.82);border:.5px solid var(--edge);color:#fff;font:600 11px var(--font);padding:2px 8px;border-radius:99px;box-shadow:none}
 .pl-tip:before{display:none}
 .leaflet-control-attribution{background:rgba(0,0,0,.5)!important;color:rgba(255,255,255,.55)!important;font-size:9px!important}
@@ -513,13 +517,14 @@ function G(a){return 'rgba('+(aodMode?'255,90,90':UI_RGB)+','+a+')'}
 
 let mapView=false,lmap=null,lmk={},homeMk=null,rngCircle=null,mapKey='';
 function setView(m){mapView=m;document.body.classList.toggle('map-view',m);try{localStorage.setItem('skywatch.view',m?'map':'radar')}catch(e){}
-  if(m){initMap();setTimeout(()=>{if(lmap){lmap.invalidateSize();updateMap()}},80)}else{setTimeout(()=>{try{resizeCanvases()}catch(e){}},60)}}
+  if(m){initMap();setTimeout(()=>{if(lmap){lmap.invalidateSize();updateMap()}},80)}else{setTimeout(()=>{try{resizeCanvases();drawRadar()}catch(e){}},60)}}
 function toggleView(){setView(!mapView)}
 function initMap(){
   if(lmap||typeof L==='undefined')return;
   lmap=L.map('map',{zoomControl:false,attributionControl:true}).setView([LAT,LON],9);
   lmap.attributionControl.setPrefix(false);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:18,subdomains:'abcd',attribution:'© OpenStreetMap · © CARTO'}).addTo(lmap);
+  lmap.on('zoomend',()=>document.getElementById('map').classList.toggle('lbl-all',lmap.getZoom()>=11));
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap contributors'}).addTo(lmap);
 }
 function updateMap(){
   if(!lmap||!mapView)return;
@@ -536,17 +541,17 @@ function updateMap(){
     if(!isFinite(p.lat)||!isFinite(p.lon))return;
     seen.add(p.hex);
     const call=(p.flight||p.hex||'?').trim(),over=p._distKm*1000<notifRadius*1000,sel=p.hex===selHex;
-    const html='<div class="plane-pin'+(over?' over':'')+(sel?' sel':'')+'" style="transform:rotate('+(p.track||0)+'deg)"><svg viewBox="0 0 24 24"><path d="M12 2c.8 0 1.5.9 1.5 2v5.5l8 4.5v2l-8-2.3V19l2 1.6V22l-3.5-1-3.5 1v-1.4l2-1.6v-4.8l-8 2.3v-2l8-4.5V4c0-1.1.7-2 1.5-2z"/></svg></div>';
+    const html='<div class="pin-wrap"><div class="plane-pin'+(over?' over':'')+(sel?' sel':'')+'" style="transform:rotate('+(p.track||0)+'deg)"><svg viewBox="0 0 24 24"><path d="M12 2c.8 0 1.5.9 1.5 2v5.5l8 4.5v2l-8-2.3V19l2 1.6V22l-3.5-1-3.5 1v-1.4l2-1.6v-4.8l-8 2.3v-2l8-4.5V4c0-1.1.7-2 1.5-2z"/></svg></div><span class="pl-lbl'+((sel||over)?' on':'')+'">'+call+'</span></div>';
     const icon=L.divIcon({className:'',html,iconSize:[30,30],iconAnchor:[15,15]});
     let mk=lmk[p.hex];
-    if(mk){mk.setLatLng([p.lat,p.lon]);mk.setIcon(icon);mk.setTooltipContent(call)}
-    else{mk=L.marker([p.lat,p.lon],{icon,riseOnHover:true}).addTo(lmap);mk.bindTooltip(call,{permanent:true,direction:'right',offset:[10,0],className:'pl-tip'});mk.on('click',()=>selectPlane(p.hex));lmk[p.hex]=mk}
+    if(mk){mk.setLatLng([p.lat,p.lon]);mk.setIcon(icon)}
+    else{mk=L.marker([p.lat,p.lon],{icon,riseOnHover:true}).addTo(lmap);mk.on('click',()=>selectPlane(p.hex));lmk[p.hex]=mk}
   });
   Object.keys(lmk).forEach(k=>{if(!seen.has(k)){lmk[k].remove();delete lmk[k]}});
 }
 document.addEventListener('DOMContentLoaded',()=>{
   const w=document.getElementById('radarWrap');
-  if(window.ResizeObserver&&w)new ResizeObserver(()=>{if(w.clientHeight>0)try{resizeCanvases()}catch(e){}}).observe(w);
+  if(window.ResizeObserver&&w)new ResizeObserver(()=>{if(w.clientHeight>0)try{resizeCanvases();drawRadar()}catch(e){}}).observe(w);
   let v='radar';try{v=localStorage.getItem('skywatch.view')||v}catch(e){}
   if(v==='map')setView(true);
 });
