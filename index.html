@@ -310,6 +310,47 @@ body.map-view #viewBtn{background:var(--g);border-color:transparent}
 .theme-sw:active{transform:scale(.88)}
 .theme-sw.on{box-shadow:0 0 0 2.5px #000,0 0 0 4.5px #fff}
 .theme-name{font-size:.8rem;color:var(--muted);margin:10px 6px 0;min-height:1em}
+.sk-strip{display:flex;align-items:center;gap:8px;padding:0 16px 6px;font:600 .66rem var(--mono);letter-spacing:.07em;color:var(--gd);flex-shrink:0;white-space:nowrap;overflow:hidden}
+.sk-l{color:var(--muted);font-weight:500}#skText{overflow:hidden;text-overflow:ellipsis}
+body.golden{--g:#ffb340;--g2:#ffd68a;--g-rgb:255,179,64;--g2-rgb:255,214,138;--m2-rgb:255,120,60}
+body.golden .pl-lbl,body.golden .ac-call,body.golden .ar-call{text-shadow:0 0 10px rgba(255,170,60,.55)}
+.tmeter{display:flex;align-items:center;gap:6px;font:600 .6rem var(--mono);color:var(--muted);letter-spacing:.05em}
+.tmb{display:flex;gap:2px}.tmb i{width:4px;height:12px;border-radius:2px;background:rgba(255,255,255,.14)}.tmb i.on{background:var(--g)}
+.trk{position:absolute;left:12px;bottom:12px;z-index:1000;max-width:calc(100% - 100px);padding:8px;border-radius:20px;background:var(--glass);border:.5px solid var(--edge);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur)}
+.trk[hidden]{display:none}
+.trk-i{font:600 .68rem var(--mono);color:var(--gd);padding:0 4px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trk-b{display:flex;gap:4px}
+.trk-b button{padding:7px 10px;border-radius:99px;background:var(--fill);font:700 .64rem var(--font);letter-spacing:.04em;color:#fff}
+.trk-b button:disabled{opacity:.35}.trk-b button.on{background:var(--g);color:#000}
+.plane-pin.lock{filter:drop-shadow(0 0 7px var(--g)) drop-shadow(0 0 2px #fff)}
+.sk-fx{position:fixed;inset:0;z-index:4;pointer-events:none;opacity:0}
+.sk-fx.sunrise{background:linear-gradient(0deg,rgba(255,170,90,.5),rgba(255,110,150,.22) 45%,transparent 78%);animation:skWash 30s ease-in-out forwards}
+.sk-fx.dawn{background:linear-gradient(0deg,rgba(190,110,230,.4),rgba(90,110,255,.18) 50%,transparent 80%);animation:skWash 20s ease-in-out forwards}
+.sk-fx.sunset{background:linear-gradient(0deg,rgba(255,60,50,.5),rgba(255,130,40,.34) 40%,rgba(120,50,150,.24) 75%,transparent);animation:skWash 30s ease-in-out forwards}
+.sk-fx.moon{background:radial-gradient(circle at 82% 14%,rgba(210,225,255,.38),transparent 55%);animation:skWash 20s ease-in-out forwards}
+.sk-sunbox{display:none;position:absolute;left:0;right:0;top:20%;height:32%;overflow:hidden;border-bottom:1px solid rgba(255,170,80,.5)}
+.sk-fx.sunset .sk-sunbox{display:block}
+.sk-sun{position:absolute;left:50%;top:0;width:58px;height:58px;margin-left:-29px;border-radius:50%;background:radial-gradient(circle,#fff3b0,#ffb340 55%,#ff6a3d);box-shadow:0 0 40px 12px rgba(255,140,50,.6);animation:skSet 14s ease-in forwards}
+@keyframes skWash{0%{opacity:0}25%,70%{opacity:1}100%{opacity:0}}
+@keyframes skSet{from{transform:translateY(0)}to{transform:translateY(125%)}}
+#skCards{position:fixed;top:calc(12px + env(safe-area-inset-top,0));left:0;right:0;z-index:85;display:flex;justify-content:center;pointer-events:none}
+.sk-card{pointer-events:auto;min-width:220px;max-width:86vw;padding:16px 22px;border-radius:26px;text-align:center;background:rgba(44,44,46,.82);border:.5px solid var(--edge);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);box-shadow:0 20px 60px rgba(0,0,0,.55);animation:cardIn .5s cubic-bezier(.2,.8,.2,1)}
+.sk-card.out{opacity:0;transform:translateY(-16px);transition:.4s}
+.sk-h{font:700 .72rem var(--font);letter-spacing:.14em;color:var(--g2)}
+.sk-big{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;margin:8px 0 2px}
+.sk-sub{font-size:.95rem;color:var(--gd)}
+.sk-row{font:600 .85rem var(--mono);margin-top:8px;color:#fff}
+@keyframes cardIn{from{opacity:0;transform:translateY(-24px) scale(.94)}}
+#skSpace{position:fixed;inset:0;z-index:75;background:radial-gradient(ellipse at 50% 40%,#0b0b2a,#000 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;animation:cardIn .8s}
+#skSpace[hidden]{display:none}
+#skSpace i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;animation:skTw 3s ease-in-out infinite}
+@keyframes skTw{50%{opacity:.15;transform:scale(.6)}}
+.sp-t{font:200 4rem var(--font);letter-spacing:.05em;z-index:1}.sp-n{font:700 1.2rem var(--font);letter-spacing:.3em;z-index:1}.sp-n small{display:block;font-size:.8rem;letter-spacing:.5em;color:var(--g2);margin-top:6px}
+.sp-f{font:600 .7rem var(--mono);letter-spacing:.2em;color:var(--gd);z-index:1;transition:opacity 1s}
+.pv-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pv-btn{padding:13px 8px;border-radius:16px;background:rgba(255,255,255,.07);font:600 .88rem var(--font);color:#fff}
+.pv-btn:active{background:rgba(255,255,255,.16)}
+.aod-mode .sk-strip,.aod-mode .trk,.aod-mode .sk-fx{display:none !important}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -356,8 +397,9 @@ body.map-view #viewBtn{background:var(--g);border-color:transparent}
       <button class="icon-btn" onclick="openSettings()" aria-label="Settings"><svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/></svg></button>
     </div>
   </div>
-  <div class="radar-wrap" id="radarWrap"><canvas id="radarCanvas"></canvas><canvas id="sweepCanvas"></canvas><button class="ar-fab" onclick="openAR()" aria-label="AR mode"><svg viewBox="0 0 24 24"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3"/></svg>AR</button></div>
-  <div class="map-wrap" id="mapWrap"><div id="map"></div><button class="ar-fab" onclick="openAR()" aria-label="AR mode"><svg viewBox="0 0 24 24"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3"/></svg>AR</button></div>
+  <div class="sk-strip" id="skStrip"><span class="sk-l">SKY STATE</span><span id="skText">—</span></div>
+  <div class="radar-wrap" id="radarWrap"><canvas id="radarCanvas"></canvas><canvas id="sweepCanvas"></canvas><div class="trk" hidden><div class="trk-i"></div><div class="trk-b"><button onclick="trkAct('lock')">LOCK</button><button onclick="trkAct('track')">TRACK</button><button onclick="trkAct('rel')">RELEASE</button></div></div><button class="ar-fab" onclick="openAR()" aria-label="AR mode"><svg viewBox="0 0 24 24"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3"/></svg>AR</button></div>
+  <div class="map-wrap" id="mapWrap"><div id="map"></div><div class="trk" hidden><div class="trk-i"></div><div class="trk-b"><button onclick="trkAct('lock')">LOCK</button><button onclick="trkAct('track')">TRACK</button><button onclick="trkAct('rel')">RELEASE</button></div></div><button class="ar-fab" onclick="openAR()" aria-label="AR mode"><svg viewBox="0 0 24 24"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3"/></svg>AR</button></div>
   <div class="stats-row">
     <div class="stat"><div class="stat-val" id="statTotal">0</div><div class="stat-lbl">In range</div></div>
     <div class="stat"><div class="stat-val" id="statOverhead">0</div><div class="stat-lbl">Overhead</div></div>
@@ -367,12 +409,13 @@ body.map-view #viewBtn{background:var(--g);border-color:transparent}
   <div class="stat wx" id="weatherCard"><div class="stat-val" id="weatherTemp">—</div><div class="stat-lbl" id="weatherPlace">Weather</div><div id="weatherMeta" hidden></div><div id="weatherStatus" hidden></div></div>
   </div>
   <div class="bottom-panel" id="bottomPanel">
-    <div class="panel-header" onclick="togglePanel()"><div class="panel-title">Aircraft nearby</div><div class="panel-count" id="panelCount">0</div><div class="panel-arrow">▲</div></div>
+    <div class="panel-header" onclick="togglePanel()"><div class="panel-title">Aircraft nearby</div><div class="tmeter" id="tmeter"><span id="tmL">LOW</span><span class="tmb"></span></div><div class="panel-count" id="panelCount">0</div><div class="panel-arrow">▲</div></div>
     <div class="ac-list" id="acList"></div>
   </div>
 </div>
 
 <div class="ar-overlay" id="arOverlay" hidden><video id="arVideo" autoplay playsinline muted></video><div class="ar-markers" id="arMarkers"></div><div class="ar-cross"></div><div class="ar-hint" id="arHint">Point your camera at the sky and pan slowly</div><button class="icon-btn ar-close" onclick="closeAR()" aria-label="Close AR"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<div class="sk-fx" id="skFx"><div class="sk-sunbox"><div class="sk-sun"></div></div></div><div id="skCards"></div>
 <!-- DETAIL SHEET -->
 <div class="overlay" id="detailOverlay" onclick="closeDetail(event)">
   <div class="sheet" id="detailSheet">
@@ -405,6 +448,7 @@ body.map-view #viewBtn{background:var(--g);border-color:transparent}
       <div class="slider-val" id="radiusVal">5 km</div>
     </div>
     <div class="sec-h">Theme</div><div class="theme-grid" id="themeGrid"></div><div class="theme-name" id="themeName"></div>
+    <div class="sec-h">Sky experiences (preview)</div><div class="pv-grid"><button class="pv-btn" onclick="skPreview('sunrise')">☀️ Sunrise</button><button class="pv-btn" onclick="skPreview('sunset')">🌇 Sunset</button><button class="pv-btn" onclick="skPreview('space')">🌌 Deep Space</button><button class="pv-btn" onclick="skPreview('card')">✈️ Sighting card</button><button class="pv-btn" onclick="skPreview('dawn')">🌅 Dawn</button><button class="pv-btn" onclick="skPreview('moon')">🌕 Moon</button></div>
     <div class="sec-h">Location</div>
     <button class="loc-gps-btn" onclick="useGPS()">Use my location</button>
     <div class="loc-wrap">
@@ -537,8 +581,156 @@ body.map-view #viewBtn{background:var(--g);border-color:transparent}
 
 <script>
 let UI_RGB='10,132,255';const UI={g:'#0a84ff',g2:'#64d2ff'};
-function G(a){return 'rgba('+(aodMode?'255,90,90':UI_RGB)+','+a+')'}
+function G(a){return 'rgba('+(aodMode?'255,90,90':(skRgb()||(SK.warm?'255,179,64':UI_RGB)))+','+a+')'}
 
+/* ===== SKY STATE ENGINE ===== */
+const SK={state:'',fx:{kind:'',start:0,dur:0},trk:{hex:null,stage:'idle'},trails:{},sess:new Set(),q:[],busy:false,emptySince:Date.now(),tk:'',t:{},warm:false};
+const LSJ=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
+const LSS=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+let SKFX=LSJ('skywatch.fx',{}),SEEN=LSJ('skywatch.seen',[]),SEENSET=new Set(SEEN),VIS=LSJ('skywatch.visits',{});
+function skOnce(k,daily=true){const d=new Date().toDateString(),v=daily?d:1;if(SKFX[k]===v)return false;SKFX[k]=v;const ks=Object.keys(SKFX);if(ks.length>300)ks.slice(0,100).forEach(x=>delete SKFX[x]);LSS('skywatch.fx',SKFX);return true}
+const AIRL={IGO:'IndiGo',AIC:'Air India',AXB:'Air India Express',VTI:'Vistara',SEJ:'SpiceJet',AKJ:'Akasa Air',LLR:'Alliance Air',UAE:'Emirates',QTR:'Qatar Airways',ETD:'Etihad',SIA:'Singapore Airlines',BAW:'British Airways',DLH:'Lufthansa',THY:'Turkish Airlines',FDB:'flydubai',GFA:'Gulf Air',OMA:'Oman Air',KAC:'Kuwait Airways',AFR:'Air France',KLM:'KLM',CPA:'Cathay Pacific',THA:'Thai Airways',MAS:'Malaysia Airlines',SVA:'Saudia'};
+const RARE=['CONC','A225','A124','BLCF','DC3','DC6','DC10','MD11','B741','B742','B703','B1','B52','U2','SR71'];
+function sunAlt(ts){
+  const R=Math.PI/180,n=ts/86400000+2440587.5-2451545,L=(280.46+0.9856474*n)%360,g=((357.528+0.9856003*n)%360)*R,lam=(L+1.915*Math.sin(g)+0.02*Math.sin(2*g))*R,eps=(23.439-4e-7*n)*R;
+  const dec=Math.asin(Math.sin(eps)*Math.sin(lam)),ra=Math.atan2(Math.cos(eps)*Math.sin(lam),Math.cos(lam)),ha=((18.697374558+24.06570982441908*n)%24*15+LON)*R-ra,la=LAT*R;
+  return Math.asin(Math.sin(la)*Math.sin(dec)+Math.cos(la)*Math.cos(dec)*Math.cos(ha))/R;
+}
+function skTimes(){
+  const d0=new Date();d0.setHours(0,0,0,0);const key=d0.getTime()+'|'+LAT.toFixed(2)+LON.toFixed(2);if(SK.tk===key)return SK.t;
+  const t={};let prev=sunAlt(d0.getTime());
+  for(let m=1;m<=1440;m+=1){const ts=d0.getTime()+m*60000,a=sunAlt(ts);
+    const c=(k,lv,up)=>{if(t[k]==null&&((up&&prev<lv&&a>=lv)||(!up&&prev>lv&&a<=lv)))t[k]=ts};
+    c('sr',-.833,1);c('ss',-.833,0);c('gmS',-4,1);c('gmE',6,1);c('geS',6,0);c('geE',-4,0);prev=a}
+  SK.tk=key;SK.t=t;return t;
+}
+const hhmm=ts=>ts==null?'--:--':new Date(ts).toTimeString().slice(0,5);
+function moonAge(){const jd=Date.now()/86400000+2440587.5;return(((jd-2451550.26)%29.530588)+29.530588)%29.530588}
+/* colour stops for effects */
+const FXS={sunrise:[[70,90,200],[255,120,150],[255,200,90]],sunset:[[255,200,90],[255,120,40],[230,50,50],[90,50,140]],dawn:[[60,70,160],[190,110,230],[255,150,170]],moon:[[210,225,255],[210,225,255]]};
+function skRgb(){
+  const f=SK.fx;if(!f.kind)return null;const t=(Date.now()-f.start)/f.dur;if(t>=1){f.kind='';return null}
+  const s=FXS[f.kind],x=t*(s.length-1),i=Math.min(s.length-2,Math.floor(x)),u=x-i;
+  return s[i].map((v,k)=>Math.round(v+(s[i+1][k]-v)*u)).join(',');
+}
+function skStart(kind,dur,msg,sub){
+  SK.fx={kind,start:Date.now(),dur};const el=document.getElementById('skFx');el.className='sk-fx';void el.offsetWidth;el.className='sk-fx '+kind;
+  if(msg)skCard(msg[0],msg[1],null,sub);
+  setTimeout(()=>{if(SK.fx.kind===kind){SK.fx.kind='';el.className='sk-fx'}},dur+300);
+}
+/* cards */
+function skCard(icon,title,p,sub){SK.q.push({icon,title,p,sub});skNext()}
+function skNext(){
+  if(SK.busy||!SK.q.length)return;SK.busy=true;const o=SK.q.shift(),host=document.getElementById('skCards');
+  let b='';
+  if(o.p){const p=o.p,call=(p.flight||p.hex||'').trim(),al=AIRL[call.slice(0,3)]||call||'UNKNOWN',a=p.alt_baro??p.alt_geom,ft=typeof a==='number'?a:0;
+    b='<div class="sk-big">'+al+'</div><div class="sk-sub">'+(p.t||'Aircraft')+(p.r?' · '+p.r:'')+'</div><div class="sk-row">'+((p._distKm||0)/1.852).toFixed(1)+' NM · FL'+String(Math.round(ft/100)).padStart(3,'0')+'</div><div class="sk-row">'+(p.gs?Math.round(p.gs)+' kt':'')+'</div>'+(o.sub?'<div class="sk-sub" style="margin-top:8px">'+o.sub+'</div>':'')}
+  else b='<div class="sk-big">'+(o.sub||'')+'</div>';
+  host.innerHTML='<div class="sk-card" onclick="this.remove()"><div class="sk-h">'+o.icon+' '+o.title+'</div>'+b+'</div>';
+  setTimeout(()=>{const c=host.firstChild;if(c)c.classList.add('out')},6200);setTimeout(()=>{host.innerHTML='';SK.busy=false;skNext()},6700);
+}
+/* deep space */
+function skDeepSpace(){
+  let el=document.getElementById('skSpace');if(!el){el=document.createElement('div');el.id='skSpace';el.onclick=()=>el.hidden=true;document.body.appendChild(el)}
+  const now=new Date();let st='';for(let i=0;i<70;i++)st+='<i style="left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;animation-delay:'+Math.random()*3+'s"></i>';
+  el.innerHTML=st+'<div class="sp-t">'+now.toTimeString().slice(0,5)+'</div><div class="sp-n">SKYWATCH<small>DEEP SPACE</small></div><div class="sp-f" id="spF">TRACKING EARTH TRAFFIC</div>';el.hidden=false;
+  setTimeout(()=>{const f=document.getElementById('spF');if(f)f.textContent='RETURNING TO NIGHT OPERATIONS'},28000);setTimeout(()=>{el.hidden=true},32000);
+}
+/* tracker: LOCK -> TRACK -> RELEASE */
+function trkAct(a){
+  const T=SK.trk;
+  if(a==='lock'&&selHex&&T.stage==='idle'){T.hex=selHex;T.stage='locked';showToast('🎯 LOCKED')}
+  else if(a==='track'&&T.stage==='locked'){T.stage='tracking';showToast('📡 TRACKING')}
+  else if(a==='rel'&&T.stage!=='idle'){T.hex=null;T.stage='idle';showToast('RELEASED')}
+  trkUpdate();try{drawRadar();updateMap()}catch(e){}
+}
+function trkUpdate(){
+  const T=SK.trk;let p=T.hex&&planes.find(x=>x.hex===T.hex);
+  if(T.hex&&!p){T.hex=null;T.stage='idle';showToast('TARGET LOST')}
+  const q=p||planes.find(x=>x.hex===selHex);
+  document.querySelectorAll('.trk').forEach(b=>{
+    b.hidden=!q;if(!q)return;
+    const a=q.alt_baro??q.alt_geom,f=typeof a==='number'?'FL'+String(Math.round(a/100)).padStart(3,'0'):'GND';
+    b.querySelector('.trk-i').textContent=(T.stage==='idle'?'SELECTED':T.stage.toUpperCase())+' · '+(q.flight||q.hex).trim()+' · '+f+' · '+(q.gs?Math.round(q.gs)+'kt':'—')+' · '+(q._distKm||0).toFixed(1)+'km';
+    const bt=b.querySelectorAll('button');bt[0].disabled=T.stage!=='idle';bt[1].disabled=T.stage!=='locked';bt[2].disabled=T.stage==='idle';
+    bt[0].classList.toggle('on',T.stage==='locked');bt[1].classList.toggle('on',T.stage==='tracking');
+  });
+  if(T.stage==='tracking'&&p&&lmap&&mapView)lmap.panTo([p.lat,p.lon]);
+}
+/* trails + reticle on the radar canvas */
+function drawFx(c,cx,cy,ppn){
+  const rgb=skRgb()||(SK.warm?'255,179,64':UI_RGB),boost=SK.fx.kind==='sunrise'?1.7:1,k=60*Math.cos(LAT*Math.PI/180)*ppn;
+  const X=q=>cx+(q[1]-LON)*k,Y=q=>cy-(q[0]-LAT)*60*ppn;
+  planes.forEach(p=>{const tr=SK.trails[p.hex];if(!tr||tr.length<2)return;const lk=SK.trk.hex===p.hex;
+    for(let i=1;i<tr.length;i++){c.beginPath();c.moveTo(X(tr[i-1]),Y(tr[i-1]));c.lineTo(X(tr[i]),Y(tr[i]));c.strokeStyle='rgba('+rgb+','+Math.min(1,(lk?.9:.4)*boost*i/tr.length)+')';c.lineWidth=lk?2.2:1.3;c.stroke()}});
+  const lp=planes.find(p=>p.hex===SK.trk.hex);if(!lp)return;
+  const x=X([lp.lat,lp.lon]),y=Y([lp.lat,lp.lon]),tk=SK.trk.stage==='tracking';
+  c.save();c.translate(x,y);c.strokeStyle='#fff';c.lineWidth=1.6;c.rotate(tk?0:Date.now()/900);
+  [0,1,2,3].forEach(i=>{c.rotate(Math.PI/2);c.beginPath();c.moveTo(-9,-20);c.lineTo(-20,-20);c.lineTo(-20,-9);c.stroke()});
+  c.beginPath();c.arc(0,0,tk?26:15,0,7);c.setLineDash(tk?[]:[3,4]);c.strokeStyle='rgba('+rgb+',.9)';c.stroke();c.restore();
+}
+function mapTrails(){
+  if(!lmap)return;SK.mt=SK.mt||{};const rgb='rgb('+(skRgb()||(SK.warm?'255,179,64':UI_RGB))+')';
+  Object.keys(SK.trails).forEach(h=>{const tr=SK.trails[h];if(tr.length<2)return;const lk=SK.trk.hex===h,o={color:rgb,weight:lk?3:1.5,opacity:lk?.9:.4};
+    if(SK.mt[h])SK.mt[h].setLatLngs(tr).setStyle(o);else SK.mt[h]=L.polyline(tr,o).addTo(lmap)});
+  Object.keys(SK.mt).forEach(h=>{if(!SK.trails[h]){SK.mt[h].remove();delete SK.mt[h]}});
+}
+/* main tick */
+function skUpdate(){
+  const now=new Date(),ts=now.getTime(),a=sunAlt(ts),up=sunAlt(ts+3e5)>a,mins=now.getHours()*60+now.getMinutes(),h=now.getHours(),t=skTimes(),n=planes.length;
+  let st;
+  if(mins<10||mins>=1430)st='MIDNIGHT';else if(a>6)st='DAY';
+  else if(up)st=a>-.833?'SUNRISE':a>-12?'DAWN':'DEEPNIGHT';
+  else st=a>-.833?'GOLDEN':a>-3?'SUNSET':a>-12?'TWILIGHT':h>=12?'NIGHT':'DEEPNIGHT';
+  if(st!==SK.state){SK.state=st;SK.warm=st==='GOLDEN';document.body.classList.toggle('golden',SK.warm);
+    if(st==='SUNRISE'&&skOnce('sunrise'))skStart('sunrise',30000,['☀️','SUNRISE'],hhmm(t.sr));
+    if(st==='DAWN'&&skOnce('dawn'))skStart('dawn',20000,['🌅','DAWN MODE'],'First light');
+    if(st==='SUNSET'&&skOnce('sunset'))skStart('sunset',30000,['🌇','SUNSET DETECTED'],hhmm(t.ss));
+    if(st==='MIDNIGHT'&&skOnce('midnight'))skDeepSpace()}
+  const age=moonAge(),full=Math.abs(age-14.77)<1.2,night=a<-6;
+  if(full&&night&&skOnce('moon'))skStart('moon',20000,['🌕','MOON MODE'],'Full moon tonight');
+  const gr=ts<(t.gmE||0)?[t.gmS,t.gmE]:[t.geS,t.geE],ac=n+' AIRCRAFT';
+  const TX={DAY:'LIVE · '+ac,SUNRISE:'☀️ SUNRISE — '+hhmm(t.sr),DAWN:'🌅 DAWN · SUNRISE '+hhmm(t.sr),GOLDEN:'GOLDEN HOUR · '+hhmm(gr[0])+'–'+hhmm(gr[1]),SUNSET:'🌇 SUNSET · '+hhmm(t.ss),
+    TWILIGHT:(a>-6?'CIVIL':'NAUTICAL')+' TWILIGHT · NIGHT MODE INITIALIZING',NIGHT:(aodMode?'RED NIGHT MODE':'NIGHT')+' · '+ac,MIDNIGHT:'🌌 MIDNIGHT · DEEP SPACE',DEEPNIGHT:'🌌 DEEP NIGHT · '+ac};
+  document.getElementById('skText').textContent=TX[st]+(full&&night?' · 🌕':'');
+  /* traffic meter */
+  const lv=n<10?'LOW':n<25?'MODERATE':'HIGH',seg=Math.min(10,Math.max(n?1:0,Math.round(n/2.5)));
+  const tl=document.getElementById('tmL');if(tl){tl.textContent=lv;document.querySelectorAll('#tmeter .tmb i').forEach((e,i)=>e.classList.toggle('on',i<seg))}
+  /* per-aircraft secrets, trails, counters */
+  const live=planes.map(p=>p.hex);Object.keys(SK.trails).forEach(k=>{if(!live.includes(k))delete SK.trails[k]});
+  planes.forEach(p=>{
+    if(!p.hex||!isFinite(p.lat))return;const tr=SK.trails[p.hex]=SK.trails[p.hex]||[],l=tr[tr.length-1];
+    if(!l||Math.abs(l[0]-p.lat)+Math.abs(l[1]-p.lon)>4e-4){tr.push([p.lat,p.lon]);if(tr.length>40)tr.shift()}
+    if(!SK.sess.has(p.hex)){SK.sess.add(p.hex);
+      if(!SEENSET.has(p.hex)){SEENSET.add(p.hex);SEEN.push(p.hex);if(SEEN.length>3000)SEEN.shift();LSS('skywatch.seen',SEEN);
+        if(SEENSET.size>=100&&skOnce('century',false))skCard('💯','CENTURY',null,'100 aircraft seen');
+        if(SEENSET.size>=500&&skOnce('surge',false))skCard('🚀','AIR TRAFFIC SURGE',null,'500 aircraft seen')}
+      VIS[p.hex]=(VIS[p.hex]||0)+1;const ks=Object.keys(VIS);if(ks.length>1500)delete VIS[ks[0]];LSS('skywatch.visits',VIS);
+      if(VIS[p.hex]>=3&&skOnce('fam:'+p.hex))skCard('🔁','FAMILIAR CONTACT',p,'Seen '+VIS[p.hex]+' times')}
+    const al=p.alt_baro??p.alt_geom,ft=typeof al==='number'?al:0;
+    if((p.dbFlags&1)&&skOnce('mil:'+p.hex))skCard('🛡️','SPECIAL TRAFFIC',p);
+    else if(ft>=45000&&skOnce('hi:'+p.hex))skCard('🛰️','HIGH ALTITUDE',p);
+    else if(RARE.includes(p.t)&&skOnce('rare:'+p.hex))skCard('🏆','RARE SIGHTING',p);
+    if(p._distKm!=null&&p._distKm*1000<notifRadius*1000&&skOnce('over:'+p.hex)){skCard('🎯','RADAR LOCK',p,'Directly overhead');if(SK.trk.stage==='idle'){SK.trk.hex=p.hex;SK.trk.stage='locked'}}
+  });
+  if(h<5&&n&&skOnce('nw'))skCard('👻','NIGHT WATCH',planes[0],'First aircraft after midnight');
+  if(n){SK.emptySince=ts}else if(/LIVE/i.test(document.getElementById('liveLabel').textContent)&&ts-SK.emptySince>6e5){SK.emptySince=ts;skCard('📡','SKY SILENT',null,'No aircraft for 10 minutes')}
+  trkUpdate();
+}
+function skPreview(k){
+  document.querySelectorAll('.overlay.open').forEach(o=>o.classList.remove('open'));
+  const t=skTimes();
+  if(k==='sunrise')skStart('sunrise',30000,['☀️','SUNRISE'],hhmm(t.sr));
+  if(k==='sunset')skStart('sunset',30000,['🌇','SUNSET DETECTED'],hhmm(t.ss));
+  if(k==='dawn')skStart('dawn',20000,['🌅','DAWN MODE'],'First light');
+  if(k==='space')skDeepSpace();
+  if(k==='moon')skStart('moon',20000,['🌕','MOON MODE'],'Full moon tonight');
+  if(k==='card'){const p=planes.slice().sort((a,b)=>a._distKm-b._distKm)[0]||{flight:'AIC127',t:'A359',_distKm:13.3,alt_baro:37000,gs:458};skCard('✈️','SIGHTING',p)}
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('#tmeter .tmb').forEach(e=>e.innerHTML='<i></i>'.repeat(10));
+  setInterval(()=>{try{skUpdate()}catch(e){}},20000);setTimeout(()=>{try{skUpdate()}catch(e){}},1500);
+});
 /* ===== THEMES ===== */
 const THEMES=[
  ['Blue','#0a84ff','#64d2ff','94,92,230'],['Mint','#30d158','#8ef0a9','0,150,120'],['Teal','#40c8e0','#99f6e4','10,132,255'],
@@ -640,12 +832,13 @@ function updateMap(){
     if(!isFinite(p.lat)||!isFinite(p.lon))return;
     seen.add(p.hex);
     const call=(p.flight||p.hex||'?').trim(),over=p._distKm*1000<notifRadius*1000,sel=p.hex===selHex;
-    const html='<div class="pin-wrap"><div class="plane-pin'+(over?' over':'')+(sel?' sel':'')+'" style="transform:rotate('+(p.track||0)+'deg)"><svg viewBox="0 0 24 24"><path d="M12 2c.8 0 1.5.9 1.5 2v5.5l8 4.5v2l-8-2.3V19l2 1.6V22l-3.5-1-3.5 1v-1.4l2-1.6v-4.8l-8 2.3v-2l8-4.5V4c0-1.1.7-2 1.5-2z"/></svg></div><span class="pl-lbl'+((sel||over)?' on':'')+'">'+call+'</span></div>';
+    const html='<div class="pin-wrap"><div class="plane-pin'+(over?' over':'')+(sel?' sel':'')+(SK.trk.hex===p.hex?' lock':'')+'" style="transform:rotate('+(p.track||0)+'deg)"><svg viewBox="0 0 24 24"><path d="M12 2c.8 0 1.5.9 1.5 2v5.5l8 4.5v2l-8-2.3V19l2 1.6V22l-3.5-1-3.5 1v-1.4l2-1.6v-4.8l-8 2.3v-2l8-4.5V4c0-1.1.7-2 1.5-2z"/></svg></div><span class="pl-lbl'+((sel||over)?' on':'')+'">'+call+'</span></div>';
     const icon=L.divIcon({className:'',html,iconSize:[30,30],iconAnchor:[15,15]});
     let mk=lmk[p.hex];
     if(mk){mk.setLatLng([p.lat,p.lon]);mk.setIcon(icon)}
     else{mk=L.marker([p.lat,p.lon],{icon,riseOnHover:true}).addTo(lmap);mk.on('click',()=>selectPlane(p.hex));lmk[p.hex]=mk}
   });
+  try{mapTrails()}catch(e){}
   Object.keys(lmk).forEach(k=>{if(!seen.has(k)){lmk[k].remove();delete lmk[k]}});
 }
 document.addEventListener('DOMContentLoaded',()=>{
@@ -1088,6 +1281,7 @@ function drawRadar() {
   const pxPerNm = R / RANGE_NM;
 
   // Airport markers + airspace
+  try{drawFx(rctx, cx, cy, pxPerNm)}catch(e){}
   drawAirportOverlays(rctx, cx, cy, pxPerNm);
   planes.forEach(p => {
     if (!p.lat || !p.lon) return;
@@ -1564,7 +1758,7 @@ function updatePlanes(raw) {
 // RENDER LIST
 // ═══════════════════════════════════════════════════════
 function renderList() {
-  try{updateMap()}catch(e){}
+  try{updateMap();skUpdate()}catch(e){}
   const list = document.getElementById('acList');
   document.getElementById('panelCount').textContent = planes.length;
   document.getElementById('statTotal').textContent = planes.length;
@@ -1621,7 +1815,7 @@ function updateStatsBar() {
 // ═══════════════════════════════════════════════════════
 function selectPlane(hex) {
   selHex = hex;
-  try{updateMap()}catch(e){}
+  try{updateMap();trkUpdate()}catch(e){}
   const p = planes.find(x => x.hex === hex);
   if (!p) return;
 
