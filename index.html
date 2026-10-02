@@ -165,25 +165,25 @@ button{font-family:var(--font);cursor:pointer;border:0;background:none;color:inh
 input{font-family:var(--font)}
 #app{display:flex;flex-direction:column;height:100%;padding-top:env(safe-area-inset-top,0);opacity:0;transition:opacity .5s}
 #app.ready{opacity:1}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px 8px;flex-shrink:0}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px 6px;flex-shrink:0}
 .titlebox{display:flex;flex-direction:column;gap:6px;min-width:0}
-.brand{font-size:2.1rem;font-weight:700;letter-spacing:-.035em;line-height:1;background:linear-gradient(180deg,#fff 30%,rgba(255,255,255,.62));-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand{font-size:1.6rem;font-weight:700;letter-spacing:-.035em;line-height:1;background:linear-gradient(180deg,#fff 30%,rgba(255,255,255,.62));-webkit-background-clip:text;background-clip:text;color:transparent}
 .badge{display:inline-flex;align-items:center;gap:7px;align-self:flex-start;padding:4px 11px 4px 9px;border-radius:99px;background:var(--glass);border:.5px solid var(--edge);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);font-size:.72rem;font-weight:600;color:var(--gd)}
 .live-dot{width:8px;height:8px;border-radius:50%;background:#30d158;box-shadow:0 0 10px #30d158;animation:blink 1.6s ease-in-out infinite}
 .live-dot.demo{background:var(--red);box-shadow:0 0 10px var(--red)}
-.actions{display:flex;gap:8px}
-.icon-btn{width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:var(--glass);border:.5px solid var(--edge);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);color:rgba(255,255,255,.92);transition:transform .15s,background .25s}
+.actions{display:flex;gap:6px;flex-shrink:0}
+.icon-btn{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:var(--glass);border:.5px solid var(--edge);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);color:rgba(255,255,255,.92);transition:transform .15s,background .25s}
 .icon-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .icon-btn:active{transform:scale(.9)}
 .icon-btn.active,.icon-btn.on{background:var(--g);border-color:transparent;box-shadow:0 4px 18px rgba(10,132,255,.5)}
-.radar-wrap{position:relative;flex:1;min-height:0;margin:0 auto;width:100%}
+.radar-wrap{position:relative;flex:1;min-height:200px;margin:0 auto;width:100%}
 .radar-wrap::before{content:"";position:absolute;inset:10%;border-radius:50%;background:radial-gradient(circle,rgba(10,132,255,.26),rgba(94,92,230,.1) 55%,transparent 72%);filter:blur(24px);pointer-events:none}
 .stats-row{display:flex;gap:10px;overflow-x:auto;padding:6px 18px 12px;flex-shrink:0;scrollbar-width:none;scroll-snap-type:x proximity}
 .stats-row::-webkit-scrollbar{display:none}
-.stat{flex:0 0 auto;min-width:96px;padding:12px 16px;border-radius:22px;background:var(--glass);border:.5px solid var(--edge);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);scroll-snap-align:start;display:flex;flex-direction:column;gap:2px}
+.stat{flex:0 0 auto;min-width:84px;padding:10px 14px;border-radius:22px;background:var(--glass);border:.5px solid var(--edge);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);scroll-snap-align:start;display:flex;flex-direction:column;gap:2px}
 .stat:first-child{background:linear-gradient(145deg,#0a84ff,#5e5ce6);border-color:rgba(255,255,255,.25);box-shadow:0 10px 28px rgba(10,132,255,.35)}
 .stat:nth-child(2) .stat-val{color:var(--amber)}
-.stat-val{font-size:1.65rem;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat-val{font-size:1.4rem;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
 .stat-lbl{font-size:.7rem;font-weight:500;color:var(--muted)}
 .stat:first-child .stat-lbl{color:rgba(255,255,255,.8)}
 .weather-card{margin:0 18px 12px;padding:16px 18px;border-radius:26px;background:var(--glass);border:.5px solid var(--edge);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);flex-shrink:0}
@@ -193,7 +193,7 @@ input{font-family:var(--font)}
 .weather-temp{font-size:2.7rem;font-weight:200;letter-spacing:-.04em;line-height:1}
 .weather-meta{font-size:.78rem;color:var(--gd);margin-top:8px;line-height:1.35}
 .weather-status{font-size:.7rem;color:var(--muted);margin-top:4px}
-.bottom-panel{flex-shrink:0;max-height:38vh;overflow:hidden;transition:max-height .4s cubic-bezier(.2,.8,.2,1);background:rgba(28,28,30,.72);border-top:.5px solid var(--edge);border-radius:30px 30px 0 0;-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);position:relative}
+.bottom-panel{flex-shrink:0;max-height:30vh;overflow:hidden;transition:max-height .4s cubic-bezier(.2,.8,.2,1);background:rgba(28,28,30,.72);border-top:.5px solid var(--edge);border-radius:30px 30px 0 0;-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);position:relative}
 .bottom-panel::before{content:"";position:absolute;top:7px;left:50%;width:38px;height:5px;margin-left:-19px;border-radius:3px;background:rgba(255,255,255,.28)}
 .bottom-panel.collapsed{max-height:66px}
 .panel-header{display:flex;align-items:center;gap:10px;padding:22px 20px 10px;cursor:pointer}
@@ -201,7 +201,7 @@ input{font-family:var(--font)}
 .panel-count{min-width:28px;text-align:center;padding:2px 10px;border-radius:99px;background:var(--fill);font-size:.8rem;font-weight:600}
 .panel-arrow{font-size:.7rem;color:var(--muted);transition:transform .3s}
 .bottom-panel.collapsed .panel-arrow{transform:rotate(180deg)}
-.ac-list{overflow-y:auto;max-height:calc(38vh - 66px);padding:2px 14px calc(14px + env(safe-area-inset-bottom,0));-webkit-overflow-scrolling:touch}
+.ac-list{overflow-y:auto;max-height:calc(30vh - 66px);padding:2px 14px calc(14px + env(safe-area-inset-bottom,0));-webkit-overflow-scrolling:touch}
 .ac-card{display:flex;align-items:center;gap:12px;padding:11px 14px;margin-bottom:6px;border-radius:18px;background:rgba(255,255,255,.06);cursor:pointer;transition:background .2s,transform .15s;animation:fadeIn .3s ease}
 .ac-card:active{transform:scale(.98);background:rgba(255,255,255,.12)}
 .ac-card.sel{background:rgba(10,132,255,.22);box-shadow:inset 0 0 0 1px rgba(10,132,255,.6)}
@@ -266,8 +266,27 @@ input{font-family:var(--font)}
 .s-card-val{font-weight:600;letter-spacing:-.02em}
 .dg-btns button,.share-btn,.site-share-btn,.aod-btn{background:var(--fill);color:var(--g);border:0;border-radius:99px;font-family:var(--font);letter-spacing:0}
 .aod-mode .weather-card,.aod-mode .radar-wrap::before{display:none !important}
+
+.map-wrap{display:none;position:relative;flex:1;min-height:200px;margin:4px 14px 12px;border-radius:30px;overflow:hidden;border:.5px solid var(--edge);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+#map{position:absolute;inset:0;background:#0b0b0d}
+body.map-view .radar-wrap{display:none}
+body.map-view .map-wrap{display:block}
+#viewBtn .i-radar{display:none}body.map-view #viewBtn .i-radar{display:block}body.map-view #viewBtn .i-map{display:none}
+body.map-view #viewBtn{background:var(--g);border-color:transparent}
+.wx{min-width:120px;max-width:170px}.wx .stat-lbl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.leaflet-container{font-family:var(--font);background:#0b0b0d}
+.home-pin{width:16px;height:16px;border-radius:50%;background:var(--g);border:3px solid #fff;box-shadow:0 0 0 7px rgba(10,132,255,.3)}
+.plane-pin{width:30px;height:30px;color:var(--g2);filter:drop-shadow(0 2px 4px rgba(0,0,0,.6));transition:transform .6s linear}
+.plane-pin svg{width:100%;height:100%;fill:currentColor}.plane-pin.over{color:var(--amber)}.plane-pin.sel{color:#fff;filter:drop-shadow(0 0 8px #0a84ff)}
+.pl-tip{background:rgba(28,28,30,.82);border:.5px solid var(--edge);color:#fff;font:600 11px var(--font);padding:2px 8px;border-radius:99px;box-shadow:none}
+.pl-tip:before{display:none}
+.leaflet-control-attribution{background:rgba(0,0,0,.5)!important;color:rgba(255,255,255,.55)!important;font-size:9px!important}
+.leaflet-control-attribution a{color:rgba(255,255,255,.7)!important}
+.aod-mode .map-wrap{display:none !important}
 @media (min-width:820px){#app{max-width:520px;margin:0 auto}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 </head>
 <body>
 
@@ -307,21 +326,19 @@ input{font-family:var(--font)}
       <button class="icon-btn aod-quick-btn" id="aodQuickBtn" onclick="toggleAOD()" aria-label="Night mode"><svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
       <button class="icon-btn" onclick="openStats()" aria-label="Stats"><svg viewBox="0 0 24 24"><path d="M5 20v-9M12 20V4M19 20v-6"/></svg></button>
       <button class="icon-btn" id="alertBtn" onclick="toggleAlerts()" aria-label="Alerts"><svg viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 1 1 12 0v5l1.5 2h-15zM10 21h4"/></svg></button>
+      <button class="icon-btn" id="viewBtn" onclick="toggleView()" aria-label="Switch radar / map"><svg class="i-map" viewBox="0 0 24 24"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2zM9 4v14M15 6v14"/></svg><svg class="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12l6-6"/></svg></button>
       <button class="icon-btn" onclick="openSettings()" aria-label="Settings"><svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/></svg></button>
     </div>
   </div>
   <div class="radar-wrap" id="radarWrap"><canvas id="radarCanvas"></canvas><canvas id="sweepCanvas"></canvas></div>
+  <div class="map-wrap" id="mapWrap"><div id="map"></div></div>
   <div class="stats-row">
     <div class="stat"><div class="stat-val" id="statTotal">0</div><div class="stat-lbl">In range</div></div>
     <div class="stat"><div class="stat-val" id="statOverhead">0</div><div class="stat-lbl">Overhead</div></div>
     <div class="stat"><div class="stat-val" id="statMax">—</div><div class="stat-lbl">Max altitude</div></div>
     <div class="stat"><div class="stat-val" id="statFastest">—</div><div class="stat-lbl">Fastest</div></div>
     <div class="stat"><div class="stat-val" id="statClosest">—</div><div class="stat-lbl">Closest</div></div>
-  </div>
-  <div class="weather-card" id="weatherCard">
-    <div class="weather-top"><div><div class="weather-label">Weather at watch point</div><div class="weather-place" id="weatherPlace">Fetching weather…</div></div><div class="weather-temp" id="weatherTemp">—</div></div>
-    <div class="weather-meta" id="weatherMeta">Current conditions for the selected watch point.</div>
-    <div class="weather-status" id="weatherStatus">—</div>
+  <div class="stat wx" id="weatherCard"><div class="stat-val" id="weatherTemp">—</div><div class="stat-lbl" id="weatherPlace">Weather</div><div id="weatherMeta" hidden></div><div id="weatherStatus" hidden></div></div>
   </div>
   <div class="bottom-panel" id="bottomPanel">
     <div class="panel-header" onclick="togglePanel()"><div class="panel-title">Aircraft nearby</div><div class="panel-count" id="panelCount">0</div><div class="panel-arrow">▲</div></div>
@@ -493,6 +510,46 @@ input{font-family:var(--font)}
 <script>
 const UI_RGB='10,132,255';
 function G(a){return 'rgba('+(aodMode?'255,90,90':UI_RGB)+','+a+')'}
+
+let mapView=false,lmap=null,lmk={},homeMk=null,rngCircle=null,mapKey='';
+function setView(m){mapView=m;document.body.classList.toggle('map-view',m);try{localStorage.setItem('skywatch.view',m?'map':'radar')}catch(e){}
+  if(m){initMap();setTimeout(()=>{if(lmap){lmap.invalidateSize();updateMap()}},80)}else{setTimeout(()=>{try{resizeCanvases()}catch(e){}},60)}}
+function toggleView(){setView(!mapView)}
+function initMap(){
+  if(lmap||typeof L==='undefined')return;
+  lmap=L.map('map',{zoomControl:false,attributionControl:true}).setView([LAT,LON],9);
+  lmap.attributionControl.setPrefix(false);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:18,subdomains:'abcd',attribution:'© OpenStreetMap · © CARTO'}).addTo(lmap);
+}
+function updateMap(){
+  if(!lmap||!mapView)return;
+  const c=[LAT,LON];
+  if(!homeMk){
+    homeMk=L.marker(c,{icon:L.divIcon({className:'',html:'<div class="home-pin"></div>',iconSize:[16,16],iconAnchor:[8,8]}),interactive:false,zIndexOffset:-500}).addTo(lmap);
+    rngCircle=L.circle(c,{radius:RANGE_NM*1852,color:'#0a84ff',weight:1.2,fill:false,dashArray:'4 7',opacity:.6}).addTo(lmap);
+  }
+  homeMk.setLatLng(c);rngCircle.setLatLng(c).setRadius(RANGE_NM*1852);
+  const key=LAT+','+LON+','+RANGE_NM;
+  if(key!==mapKey){mapKey=key;lmap.setView(c,Math.max(5,Math.min(12,Math.round(9-Math.log2(RANGE_NM/25)))),{animate:false})}
+  const seen=new Set();
+  planes.forEach(p=>{
+    if(!isFinite(p.lat)||!isFinite(p.lon))return;
+    seen.add(p.hex);
+    const call=(p.flight||p.hex||'?').trim(),over=p._distKm*1000<notifRadius*1000,sel=p.hex===selHex;
+    const html='<div class="plane-pin'+(over?' over':'')+(sel?' sel':'')+'" style="transform:rotate('+(p.track||0)+'deg)"><svg viewBox="0 0 24 24"><path d="M12 2c.8 0 1.5.9 1.5 2v5.5l8 4.5v2l-8-2.3V19l2 1.6V22l-3.5-1-3.5 1v-1.4l2-1.6v-4.8l-8 2.3v-2l8-4.5V4c0-1.1.7-2 1.5-2z"/></svg></div>';
+    const icon=L.divIcon({className:'',html,iconSize:[30,30],iconAnchor:[15,15]});
+    let mk=lmk[p.hex];
+    if(mk){mk.setLatLng([p.lat,p.lon]);mk.setIcon(icon);mk.setTooltipContent(call)}
+    else{mk=L.marker([p.lat,p.lon],{icon,riseOnHover:true}).addTo(lmap);mk.bindTooltip(call,{permanent:true,direction:'right',offset:[10,0],className:'pl-tip'});mk.on('click',()=>selectPlane(p.hex));lmk[p.hex]=mk}
+  });
+  Object.keys(lmk).forEach(k=>{if(!seen.has(k)){lmk[k].remove();delete lmk[k]}});
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  const w=document.getElementById('radarWrap');
+  if(window.ResizeObserver&&w)new ResizeObserver(()=>{if(w.clientHeight>0)try{resizeCanvases()}catch(e){}}).observe(w);
+  let v='radar';try{v=localStorage.getItem('skywatch.view')||v}catch(e){}
+  if(v==='map')setView(true);
+});
 
 
 
@@ -776,7 +833,7 @@ function syncAODButtons() {
 
   [quick, exit].forEach(btn => {
     if (!btn) return;
-    btn.textContent = label;
+    if (btn === exit) btn.textContent = label;
     btn.classList.toggle('on', aodMode);
   });
 
@@ -1187,16 +1244,14 @@ const API_NAMES = ['adsb.lol', 'airplanes.live', 'adsb.fi'];
 
 // Connection methods, tried in order: direct -> your Cloudflare Worker -> public CORS proxies.
 const WORKER_PROXY_URL = 'https://radar-046-proxy.vercel.app';
-const LOCAL_PROXY_URL = 'http://127.0.0.1:8787';   // run local_proxy.py on this machine (desktop only)
 const FETCH_METHODS = [
   url => url,
-  url => LOCAL_PROXY_URL + '/?url=' + encodeURIComponent(url),
   url => WORKER_PROXY_URL + '/?url=' + encodeURIComponent(url),
   url => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url),
 ];
-const METHOD_NAMES = ['direct', 'local proxy', 'own worker', 'allorigins'];
+const METHOD_NAMES = ['direct', 'own worker', 'allorigins'];
 
-let apiIdx = 0, methodIdx = 0, fetchFail = 0, retryTimer = null;
+let apiIdx = 0, methodIdx = 1, fetchFail = 0, retryTimer = null;
 const cool = {};   // 'a-m' or 'a' -> timestamp until which we skip (after 429/403)
 const diag = { log: [], lastOkAt: null, lastOkVia: '', running: false, passes: 0, test: null, testing: false };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -1248,7 +1303,7 @@ async function tryCombo(a, m, force) {
     const c = classifyError(e);
     if (c.short === '429') cool['a' + a] = Date.now() + 60000;
     else if (c.short === '403') cool[a + '-' + m] = Date.now() + 300000;
-    else if ((m === 0 || m === 1) && c.short === 'blocked') cool['m' + m] = Date.now() + 10 * 60000;
+    else if (m === 0 && c.short === 'blocked') cool['m' + m] = Date.now() + 10 * 60000;
     diagPush({ t: Date.now(), a, m, ok: false, ms: Math.round(performance.now() - t0), short: c.short, why: c.why });
     throw e;
   }
@@ -1405,6 +1460,7 @@ function updatePlanes(raw) {
 // RENDER LIST
 // ═══════════════════════════════════════════════════════
 function renderList() {
+  try{updateMap()}catch(e){}
   const list = document.getElementById('acList');
   document.getElementById('panelCount').textContent = planes.length;
   document.getElementById('statTotal').textContent = planes.length;
@@ -1461,6 +1517,7 @@ function updateStatsBar() {
 // ═══════════════════════════════════════════════════════
 function selectPlane(hex) {
   selHex = hex;
+  try{updateMap()}catch(e){}
   const p = planes.find(x => x.hex === hex);
   if (!p) return;
 
